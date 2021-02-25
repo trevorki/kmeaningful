@@ -4,6 +4,14 @@
 Contributing
 ============
 
+Group 16 Team Members
+^^^^^^^^^^^^^^^^^^^^^
+
+* Yihong (Hazel) Jiang
+* Mike Lynch
+* Trevor Kinsey
+* Sasha Babicki
+
 Contributions are welcome, and they are greatly appreciated! Every little bit
 helps, and credit will always be given.
 
