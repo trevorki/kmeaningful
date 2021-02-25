@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/sbabicki/kmeaningful
+    $ git clone git://github.com/UBC-MDS/kmeaningful
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/sbabicki/kmeaningful/tarball/main
+    $ curl  -OL https://github.com/UBC-MDS/kmeaningful/tarball/main
 
 Once you have a copy of the source, you can install it. The method of installation will depend on the packaging library being used.
 
@@ -55,5 +55,5 @@ If `poetry` is being used (poetry.lock and pyproject.toml files are present), in
     $ poetry install
 
 
-.. _Github repo: https://github.com/sbabicki/kmeaningful
-.. _tarball: https://github.com/sbabicki/kmeaningful/tarball/master
+.. _Github repo: https://github.com/UBC-MDS/kmeaningful
+.. _tarball: https://github.com/UBC-MDS/kmeaningful/tarball/master

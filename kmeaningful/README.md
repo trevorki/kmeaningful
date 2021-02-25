@@ -1,6 +1,6 @@
 # kmeaningful 
 
-![](https://github.com/sbabicki/kmeaningful/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/sbabicki/kmeaningful/branch/main/graph/badge.svg)](https://codecov.io/gh/sbabicki/kmeaningful) ![Release](https://github.com/sbabicki/kmeaningful/workflows/Release/badge.svg) [![Documentation Status](https://readthedocs.org/projects/kmeaningful/badge/?version=latest)](https://kmeaningful.readthedocs.io/en/latest/?badge=latest)
+![](https://github.com/UBC-MDS/kmeaningful/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/UBC-MDS/kmeaningful/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/kmeaningful) ![Release](https://github.com/UBC-MDS/kmeaningful/workflows/Release/badge.svg) [![Documentation Status](https://readthedocs.org/projects/kmeaningful/badge/?version=latest)](https://kmeaningful.readthedocs.io/en/latest/?badge=latest)
 
 Package for automating k-means clustering workflows
 
@@ -28,7 +28,7 @@ The official documentation is hosted on Read the Docs: https://kmeaningful.readt
 
 ## Contributors
 
-We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/sbabicki/kmeaningful/graphs/contributors).
+We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/UBC-MDS/kmeaningful/graphs/contributors).
 
 ### Credits
 

@@ -26,8 +26,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = u'kmeaningful'
-copyright = u"2021, Sasha Babicki"
-author = u"Sasha Babicki"
+copyright = u"2021, Group 16"
+author = u"Group 16"
 
 # -- General configuration ---------------------------------------------
 
@@ -128,7 +128,7 @@ latex_elements = {
 latex_documents = [
     (master_doc, 'kmeaningful.tex',
      u'kmeaningful Documentation',
-     u'Sasha Babicki', 'manual'),
+     u'Group 16', 'manual'),
 ]
 
 
