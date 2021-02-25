@@ -1,16 +1,17 @@
 .. highlight:: shell
 
 ============
-Contributing
+Group 16 Team Members
 ============
 
-Group 16 Team Members
-^^^^^^^^^^^^^^^^^^^^^
-
-* Yihong (Hazel) Jiang
+* Yihong (Hazel) Jiang 
 * Mike Lynch
 * Trevor Kinsey
-* Sasha Babicki
+* Sasha Babicki 
+
+============
+Contributing
+============
 
 Contributions are welcome, and they are greatly appreciated! Every little bit
 helps, and credit will always be given.
