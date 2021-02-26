@@ -7,7 +7,7 @@ Package for automating k-means clustering workflows
 ## Installation
 
 ```bash
-$ pip install -i https://test.pypi.org/simple/ kmeaningful
+$ pip install -i https://test.pypi.org/simple/kmeaningful
 ```
 
 ## Features
@@ -27,6 +27,11 @@ $ pip install -i https://test.pypi.org/simple/ kmeaningful
 The official documentation is hosted on Read the Docs: https://kmeaningful.readthedocs.io/en/latest/
 
 ## Contributors
+This project was created by DSCI 524 Group 16: 
+- Yihong (Hazel) Jiang
+- Mike Lynch
+- Trevor Kinsey
+- Sasha Babicki
 
 We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/UBC-MDS/kmeaningful/graphs/contributors).
 
