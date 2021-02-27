@@ -24,6 +24,6 @@ def show_clusters(X, centroids, labels = None):
     >>> processed_data = preprocess(X)
     >>> optimal_K = find_elbow(processed_data)
     >>> centroids = fit(processed_data, optimal_k)
-    >>> show_fit(processed_data, centroids)
+    >>> show_clusters(processed_data, centroids)
     
     """
