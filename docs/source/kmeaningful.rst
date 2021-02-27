@@ -12,14 +12,6 @@ kmeaningful.find\_elbow module
    :undoc-members:
    :show-inheritance:
 
-kmeaningful.fit module
-----------------------
-
-.. automodule:: kmeaningful.fit
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 kmeaningful.fit\_predict module
 -------------------------------
 
@@ -32,14 +24,6 @@ kmeaningful.kmeaningful module
 ------------------------------
 
 .. automodule:: kmeaningful.kmeaningful
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-kmeaningful.predict module
---------------------------
-
-.. automodule:: kmeaningful.predict
    :members:
    :undoc-members:
    :show-inheritance:
