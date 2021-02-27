@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kmeaningful package &#8212; kmeaningful  documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="kmeaningful-package">
+<h1>kmeaningful package<a class="headerlink" href="#kmeaningful-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kmeaningful.find_elbow">
+<span id="kmeaningful-find-elbow-module"></span><h2>kmeaningful.find_elbow module<a class="headerlink" href="#module-kmeaningful.find_elbow" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="kmeaningful.find_elbow.find_elbow">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.find_elbow.</span></code><code class="sig-name descname"><span class="pre">find_elbow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/find_elbow.html#find_elbow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.find_elbow.find_elbow" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to 10.</p>
+<p>It returns the value for K which minimizes the sum of square distance between points and cluster centers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
+<li><p><strong>data to train clustering model with.</strong> (<em>Pre-scaled</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>int</em></p></li>
+<li><p><em>The value for K which minimizes the sum of squared distance between points and cluster centers.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">optimal_K</span> <span class="o">=</span> <span class="n">find_elbow</span><span class="p">(</span><span class="n">processed_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kmeaningful.fit">
+<span id="kmeaningful-fit-module"></span><h2>kmeaningful.fit module<a class="headerlink" href="#module-kmeaningful.fit" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="kmeaningful.fit.fit">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit.</span></code><code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit.html#fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</p>
+<p>It returns an array of the coordinates of the k cluster centers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
+<li><p><strong>data to train clustering model with.</strong> (<em>Pre-scaled</em>) – </p></li>
+<li><p><strong>k</strong> (<em>int</em>) – </p></li>
+<li><p><strong>number of clusters to use for Kmeans.</strong> (<em>The</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>array</em></p></li>
+<li><p><em>A (k,d) array of the center locations for each cluster where d = number of dimensions</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kmeaningful.fit_predict">
+<span id="kmeaningful-fit-predict-module"></span><h2>kmeaningful.fit_predict module<a class="headerlink" href="#module-kmeaningful.fit_predict" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="kmeaningful.fit_predict.fit_predict">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_predict.</span></code><code class="sig-name descname"><span class="pre">fit_predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_predict.html#fit_predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_predict.fit_predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</p>
+<p>It returns a list of the cluster labels for each point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
+<li><p><strong>data to train clustering model with.</strong> (<em>Pre-scaled</em>) – </p></li>
+<li><p><strong>k</strong> (<em>int</em>) – </p></li>
+<li><p><strong>number of clusters to use for Kmeans.</strong> (<em>The</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>list</em></p></li>
+<li><p><em>A list containing the cluster label for every example (row) in X.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_assignments</span> <span class="o">=</span> <span class="n">fit_predict</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kmeaningful.kmeaningful">
+<span id="kmeaningful-kmeaningful-module"></span><h2>kmeaningful.kmeaningful module<a class="headerlink" href="#module-kmeaningful.kmeaningful" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-kmeaningful.predict">
+<span id="kmeaningful-predict-module"></span><h2>kmeaningful.predict module<a class="headerlink" href="#module-kmeaningful.predict" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="kmeaningful.predict.predict">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.predict.</span></code><code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/predict.html#predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.predict.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns data to clusters based on Euclidean distance to the nearest centroid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
+<li><p><strong>data for cluster assignment.</strong> (<em>Pre-scaled</em>) – </p></li>
+<li><p><strong>centers</strong> (<em>list</em>) – </p></li>
+<li><p><strong>locations of the cluster centers.</strong> (<em>The</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>list</em></p></li>
+<li><p><em>A list with the cluster assignments for the data.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_assignments</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kmeaningful.preprocess">
+<span id="kmeaningful-preprocess-module"></span><h2>kmeaningful.preprocess module<a class="headerlink" href="#module-kmeaningful.preprocess" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="kmeaningful.preprocess.preprocess">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.preprocess.</span></code><code class="sig-name descname"><span class="pre">preprocess</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/preprocess.html#preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.preprocess.preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes in training data and applies some preprocessing steps such as scaling and one hot encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
+<li><p><strong>data on which to apply preprocessing steps.</strong> (<em>Unprocessed</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>DataFrame</em></p></li>
+<li><p><em>A DataFrame with appropriate preprocessing steps applied.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kmeaningful.show_clusters">
+<span id="kmeaningful-show-clusters-module"></span><h2>kmeaningful.show_clusters module<a class="headerlink" href="#module-kmeaningful.show_clusters" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="kmeaningful.show_clusters.show_clusters">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.show_clusters.</span></code><code class="sig-name descname"><span class="pre">show_clusters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centroids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/show_clusters.html#show_clusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.show_clusters.show_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function reduces a data set to 2 dimensions using principle component analysis (PCA) and colours clusters of points.</p>
+<p>X : DataFrame
+Pre-scaled data to train clustering model with.</p>
+<p>centroids: array
+Coordinates of cluster centroids</p>
+<p>labels: list, optional
+Names of clusters, by default None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>plot</em></p></li>
+<li><p><em>A 2d principle components scatter plot coloured by cluster</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">optimal_K</span> <span class="o">=</span> <span class="n">find_elbow</span><span class="p">(</span><span class="n">processed_data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">centroids</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">optimal_k</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show_fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">centroids</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-kmeaningful">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kmeaningful" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">kmeaningful</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conduct.html">Code of Conduct</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Group 16.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/source/kmeaningful.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

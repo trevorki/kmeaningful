@@ -2,7 +2,7 @@ def fit(X, k):
     """
     This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.
     
-    It returns a length k list of the locations of cluster centers.
+    It returns an array of the coordinates of the k cluster centers.
 
     Parameters
     ----------
@@ -14,8 +14,8 @@ def fit(X, k):
 
     Returns
     -------
-    list
-    A list size k of the center locations for each cluster.
+    array
+    A (k,d) array of the center locations for each cluster where d = number of dimensions
 
     Examples
     --------
