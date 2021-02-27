@@ -20,16 +20,16 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 - `find_elbow(X)` - Automatic hyperparameter tuning to select optimal number of clusters, `k`
 - `fit(X)` - finds centroid location for all of the `k` cclusters
 - `predict(X, centres)` - assigns each example to a cluster
-- `fit_and_predict(X, k)` - Wrapper function that calls `fit(X, k)` and `predict(X, centres)`
-- `show_fit(X, k)` - Visualize clusters according to 2d or 3d PCA representation
+- `fit_predict(X, k)` - Wrapper function that calls `fit(X, k)` and `predict(X, centres)`
+- `show_clusters(X, centres)` - Visualize clusters according to 2d PCA representation
 
 ## Dependencies
 
-- TODO
+-
 
 ## Usage
 
-- TODO
+-
 
 ## Documentation
 
