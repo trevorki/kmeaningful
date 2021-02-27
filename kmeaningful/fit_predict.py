@@ -65,7 +65,7 @@ def predict(X, centers):
     X : DataFrame
     Pre-scaled data for cluster assignment.
 
-    centers : list
+    centers : array
     The locations of the cluster centers.
 
     Returns
