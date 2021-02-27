@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "kmeaningful"
+version = "0.1.0"
+description = "Package for automating k-means clustering workflows"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+Sphinx = "^3.5.1"
+sphinxcontrib-napoleon = "^0.7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
