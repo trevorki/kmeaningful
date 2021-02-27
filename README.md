@@ -4,9 +4,9 @@
 
 Have you ever encountered a dataset that seems to have different patterns in it? Have you ever tried to group similar things together in a dataset and to make prediction for a new sample? 
 
-## Kmeaningful's Place in the Python Ecosystem
-
 We created `kmeaningful` to help solve such problems. `kmeaningful` is a Python package that uses the k-means algorithm to find and assign labels to clusters, and make prediction on new data points. It also contains functions to help with data preprocessing, hyperparameter tuning and visualizing clusters.
+
+## Kmeaningful's Place in the Python Ecosystem
 
 There already exist several packages that implement k-means clustering in Python. Most notably there are the Scikit-learn `sklearn.cluster.KMeans` and SciPy `scipy.cluster.vq.kmeans` implementations. We are not trying to break new ground with `kmeaningful`, but rather to build a simple and lightweight implementation from scratch.
 
