@@ -229,36 +229,6 @@ Names of clusters, by default None</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-kmeaningful.show_fit">
-<span id="kmeaningful-show-fit-module"></span><h2>kmeaningful.show_fit module<a class="headerlink" href="#module-kmeaningful.show_fit" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="kmeaningful.show_fit.show_fit">
-<code class="sig-prename descclassname"><span class="pre">kmeaningful.show_fit.</span></code><code class="sig-name descname"><span class="pre">show_fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/show_fit.html#show_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.show_fit.show_fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function applies clustering algorithm on a pre-sclaed dataframe and visualize two princple features.</p>
-<p>X : DataFrame
-Pre-scaled data to train clustering model with.</p>
-<p>k: int
-Number of optimized clusters</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>plot</em></p></li>
-<li><p><em>A 2d principle components scatter plot coloured by cluster</em></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">optimal_K</span> <span class="o">=</span> <span class="n">find_elbow</span><span class="p">(</span><span class="n">processed_data</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">show_fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">optimal_K</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</div>
 <div class="section" id="module-kmeaningful">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kmeaningful" title="Permalink to this headline">¶</a></h2>
 </div>

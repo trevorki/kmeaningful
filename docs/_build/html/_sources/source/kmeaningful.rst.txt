@@ -44,14 +44,6 @@ kmeaningful.show\_clusters module
    :undoc-members:
    :show-inheritance:
 
-kmeaningful.show\_fit module
-----------------------------
-
-.. automodule:: kmeaningful.show_fit
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
