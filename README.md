@@ -1,8 +1,10 @@
-# kmeaningful 
+# Kmeaningful 
 
 ![](https://github.com/UBC-MDS/kmeaningful/workflows/build/badge.svg) [![codecov](https://codecov.io/gh/UBC-MDS/kmeaningful/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/kmeaningful) ![Release](https://github.com/UBC-MDS/kmeaningful/workflows/Release/badge.svg) [![Documentation Status](https://readthedocs.org/projects/kmeaningful/badge/?version=latest)](https://kmeaningful.readthedocs.io/en/latest/?badge=latest)
 
 Have you ever encountered a dataset that seems to have different patterns in it? Have you ever tried to group similar things together in a dataset and to make prediction for a new sample? 
+
+## Kmeaningful's Place in the Python Ecosystem
 
 We created `kmeaningful` to help solve such problems. `kmeaningful` is a Python package that uses the k-means algorithm to find and assign labels to clusters, and make prediction on new data points. It also contains functions to help with data preprocessing, hyperparameter tuning and visualizing clusters.
 
@@ -25,11 +27,11 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 
 ## Dependencies
 
--
+- 
 
 ## Usage
 
--
+- 
 
 ## Documentation
 
