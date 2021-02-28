@@ -31,7 +31,9 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 
 ## Usage
 
-| Task |  `import kmeaningful as km` |
+`import kmeaningful as km`
+
+| Task | Function  |
 |------------|-----|
 | Scale numerical features| `km.preprocess(df)`|
 | Find list of centroid points| `km.fit(df, 3)`|
