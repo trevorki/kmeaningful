@@ -73,7 +73,7 @@
 <dt id="kmeaningful.fit_predict.fit">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_predict.</span></code><code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_predict.html#fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_predict.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</p>
-<p>It returns a length k list of the locations of cluster centers.</p>
+<p>It returns an array of the coordinates of the k cluster centers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -85,8 +85,8 @@
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>list</em></p></li>
-<li><p><em>A list size k of the center locations for each cluster.</em></p></li>
+<li><p><em>array</em></p></li>
+<li><p><em>A (k,d) array of the center locations for each cluster where d = number of dimensions.</em></p></li>
 </ul>
 </p>
 </dd>
@@ -140,7 +140,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
 <li><p><strong>data for cluster assignment.</strong> (<em>Pre-scaled</em>) – </p></li>
-<li><p><strong>centers</strong> (<em>list</em>) – </p></li>
+<li><p><strong>centers</strong> (<em>array</em>) – </p></li>
 <li><p><strong>locations of the cluster centers.</strong> (<em>The</em>) – </p></li>
 </ul>
 </dd>
@@ -223,7 +223,7 @@ Names of clusters, by default None</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">optimal_K</span> <span class="o">=</span> <span class="n">find_elbow</span><span class="p">(</span><span class="n">processed_data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">centroids</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">optimal_k</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">show_fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">centroids</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show_clusters</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">centroids</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>

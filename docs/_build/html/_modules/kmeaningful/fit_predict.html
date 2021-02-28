@@ -64,7 +64,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</span>
 <span class="sd">    </span>
-<span class="sd">    It returns a length k list of the locations of cluster centers.</span>
+<span class="sd">    It returns an array of the coordinates of the k cluster centers.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -76,8 +76,8 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    list</span>
-<span class="sd">    A list size k of the center locations for each cluster.</span>
+<span class="sd">    array</span>
+<span class="sd">    A (k,d) array of the center locations for each cluster where d = number of dimensions.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -98,7 +98,7 @@
 <span class="sd">    X : DataFrame</span>
 <span class="sd">    Pre-scaled data for cluster assignment.</span>
 
-<span class="sd">    centers : list</span>
+<span class="sd">    centers : array</span>
 <span class="sd">    The locations of the cluster centers.</span>
 
 <span class="sd">    Returns</span>
