@@ -43,7 +43,7 @@ def fit(X, k):
 
     Returns
     -------
-    arrag
+    array
     A (k,d) array of the center locations for each cluster where d = number of dimensions.
 
     Examples
