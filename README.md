@@ -20,9 +20,9 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 
 1. `preprocess(X)` - Automatic dataset preprocessing: scales numerical features
 2. `find_elbow(X)` - Automatic hyperparameter tuning to select optimal number of clusters, `k`
-3. `fit_predict(X, k)` - Wrapper function that calls `fit(X, k)` and `predict(X, centres)`
+3. `fit_assign(X, k)` - Wrapper function that calls `fit(X, k)` and `predict(X, centres)`
     - `fit(X, k)` - finds centroid location for all of the `k` clusters
-    - `predict(X, centres)` - assigns each example to a cluster
+    - `assign(X, centres)` - assigns each example to a cluster
 4. `show_clusters(X, centres)` - Visualize clusters according to 2d PCA representation
 
 ## Dependencies
@@ -37,7 +37,7 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 |------------|-----|
 | Scale numerical features| `km.preprocess(df)`|
 | Find list of centroid points| `km.fit(df, 3)`|
-| Assign new data point to cluster| `km.predict(df, array2d)`|
+| Assign new data point to cluster| `km.assign(df, array2d)`|
 | Find optimal number of cluster| `km.fit_elbow(df)`|
 | Visualize data coloured by cluster| `km.show_cluster(df, array2d)`|
 
