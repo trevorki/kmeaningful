@@ -2,7 +2,7 @@ def find_elbow(X):
     """
     This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to 10.
     
-    It returns the value for K which minimizes the sum of square distance between points and cluster centers.
+    It returns the value for K which maximizes the mean silhouette scores for all clusters.
 
     Parameters
     ----------
@@ -12,7 +12,7 @@ def find_elbow(X):
     Returns
     -------
     int
-    The value for K which minimizes the sum of squared distance between points and cluster centers.
+    The value for K which maximizes the mean silhouette scores for all clusters.
 
     Examples
     --------
