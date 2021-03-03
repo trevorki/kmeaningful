@@ -37,7 +37,7 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 |------------|-----|
 | Scale numerical features| `km.preprocess(df)`|
 | Find list of centroid points| `km.fit(df, 3)`|
-| Assign new data point to cluster| `km.predict(df, array2d`|
+| Assign new data point to cluster| `km.predict(df, array2d)`|
 | Find optimal number of cluster| `km.fit_elbow(df)`|
 | Visualize data coloured by cluster| `km.show_cluster(df, array2d)`|
 
