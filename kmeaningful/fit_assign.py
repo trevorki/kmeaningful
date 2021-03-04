@@ -226,7 +226,7 @@ def fit_assign(X, k):
     --------
     >>> from sklearn.datasets import make_blobs
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
-    >>> cluster_assignments = fit_predict(X, 3)    
+    >>> centers, labels = fit_assign(X, 3, centers)
     """
     centers = fit(X, k)
     labels = assign(X, centers)
