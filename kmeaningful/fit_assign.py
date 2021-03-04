@@ -202,11 +202,9 @@ def fit(X, k):
     return new_centers
     
 
-def fit_assign(X, k, centers):
+def fit_assign(X, k):
     """
     This function takes in data and performs clustering using the KMeans clustering algorithm.
-    
-    It returns a list of the cluster labels for each point.
 
     Parameters
     ----------
@@ -216,12 +214,11 @@ def fit_assign(X, k, centers):
     k : int
     The number of clusters to use for Kmeans.
     
-    centers : array
-    The locations of the cluster centers. Dimensions: (k,d)
-    
-
     Returns
     -------
+    array
+    The coordinates of the cluster centers
+    
     list
     A list containing the cluster label for every example (row) in X.
 
@@ -231,10 +228,11 @@ def fit_assign(X, k, centers):
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
     >>> cluster_assignments = fit_predict(X, 3)    
     """
-    fit(X, k)
+    centers = fit(X, k)
     labels = assign(X, centers)
        
-    return X
+    return centers, labels
+
 
 
 # plotting functions
