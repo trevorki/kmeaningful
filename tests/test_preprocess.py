@@ -24,3 +24,12 @@ def test_preprocess():
     X = pd.DataFrame({"col1":[1], "col2":[1]})
     expected_output = np.array([[0., 0.]])
     assert (expected_output == preprocess(X)).all()
+
+    # reject non-numeric data (may change to auto-detect)
+    X = pd.DataFrame({"col1":["string"]})
+    assert pytest.raises(Exception, preprocess, X)
+
+    # handle missing data with imputation
+    X = pd.DataFrame({"col1":[None], "col2": [1]})
+    expected_output = np.array([[0., 0.]])  # should be filled in with mean and then scaled
+    assert (expected_output == preprocess(X)).all()
