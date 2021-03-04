@@ -33,3 +33,11 @@ def test_preprocess():
     X = pd.DataFrame({"col1":[None], "col2": [1]})
     expected_output = np.array([[0., 0.]])  # should be filled in with mean and then scaled
     assert (expected_output == preprocess(X)).all()
+
+    # reject when all data missing
+    X = pd.DataFrame({"col1":[None]})
+    assert pytest.raises(Exception, preprocess, X)
+    
+    # reject when all data missing - multidimentional
+    X = pd.DataFrame({"col1":[None, None], "col2":[None, None]})
+    assert pytest.raises(Exception, preprocess, X)
