@@ -1,8 +1,11 @@
 from kmeaningful import __version__
 from kmeaningful.preprocess import preprocess
+
+from sklearn.datasets import make_blobs
+
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+
 import pytest
 
 def test_version():
@@ -28,9 +31,17 @@ def test_preprocess():
     expected_output = np.array([[0., 0.]])
     assert (expected_output == preprocess(X)).all()
 
-    # reject non-numeric data (may change to auto-detect)
-    X = pd.DataFrame({"col1":["string"]})
-    assert pytest.raises(Exception, preprocess, X)
+    # scaling is working as expected
+    X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
+    processed_data = preprocess(X)
+    assert X.max() >= processed_data.max()
+    assert X.min() <= processed_data.min()
+
+    # imputation is working as expected
+    mask = np.random.choice([True, False], size=X.shape) 
+    X[mask] = None  # set entries as None at random
+    assert np.isnan(X).any()  # check that test code working
+    assert not np.isnan(preprocess(X)).any()  # result should not have nans
 
     # handle missing data with imputation
     X = pd.DataFrame({"col1":[None], "col2": [1]})
@@ -43,4 +54,8 @@ def test_preprocess():
 
     # reject when all data missing - multidimentional
     X = pd.DataFrame({"col1":[None, None], "col2":[None, None]})
+    assert pytest.raises(Exception, preprocess, X)
+
+    # reject non-numeric data (may change to auto-detect)
+    X = pd.DataFrame({"col1":["string"]})
     assert pytest.raises(Exception, preprocess, X)
