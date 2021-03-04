@@ -18,4 +18,9 @@ def test_preprocess():
     # dataframe with one col and one row 0 should be the same scaled or not
     X = pd.DataFrame({"col1":[0]})
     expected_output = X.to_numpy().astype(float)
-    assert expected_output == preprocess(X)
+    assert (expected_output == preprocess(X)).all()
+
+    # dataframe with two cols with same values should be [[0., 0.]]
+    X = pd.DataFrame({"col1":[1], "col2":[1]})
+    expected_output = np.array([[0., 0.]])
+    assert (expected_output == preprocess(X)).all()
