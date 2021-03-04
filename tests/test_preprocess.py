@@ -19,6 +19,9 @@ def test_preprocess():
     X = pd.DataFrame({"col1":[0]})
     expected_output = X.to_numpy().astype(float)
     assert (expected_output == preprocess(X)).all()
+    
+    # return type of processed data should be numpy.ndarray
+    assert type(preprocess(X)) is np.ndarray
 
     # dataframe with two cols with same values should be [[0., 0.]]
     X = pd.DataFrame({"col1":[1], "col2":[1]})
@@ -37,7 +40,7 @@ def test_preprocess():
     # reject when all data missing
     X = pd.DataFrame({"col1":[None]})
     assert pytest.raises(Exception, preprocess, X)
-    
+
     # reject when all data missing - multidimentional
     X = pd.DataFrame({"col1":[None, None], "col2":[None, None]})
     assert pytest.raises(Exception, preprocess, X)
