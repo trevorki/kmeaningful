@@ -28,9 +28,9 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 ## Dependencies
 
 - Python 3.8.0 and Python packages:
-      - pandas==^1.2.3
-      - pytest==6.2.2 
-      - sklearn==^0.0 
+    - pandas==^1.2.3
+    - pytest==6.2.2 
+    - sklearn==^0.0 
 
 ## Usage
 
