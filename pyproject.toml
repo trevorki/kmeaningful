@@ -7,10 +7,12 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pandas = "^1.2.3"
 
 [tool.poetry.dev-dependencies]
 Sphinx = "^3.5.1"
 sphinxcontrib-napoleon = "^0.7"
+pytest = "^6.2.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
