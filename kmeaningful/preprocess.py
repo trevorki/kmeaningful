@@ -1,3 +1,7 @@
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
 def preprocess(X):
     """
     This function takes in training data and applies some preprocessing steps such as scaling and one hot encoding.
@@ -19,3 +23,13 @@ def preprocess(X):
     >>> processed_data = preprocess(X)
     
     """
+    
+    # Throw error for empty dataframe, alternative is to return empty
+    if len(X) < 1:
+        raise Exception("Please provide a dataframe X with at least one row as input")
+        
+    preprocess_pipe = make_pipeline(StandardScaler())
+    preprocess_pipe.fit(X)
+    X_processed = preprocess_pipe.transform(X)
+
+    return X_processed
