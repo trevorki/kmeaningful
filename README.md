@@ -18,7 +18,7 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 
 ## Features
 
-1. `preprocess(X)` - Automatic dataset preprocessing: scales numerical features
+1. `preprocess(X)` - Automatic dataset preprocessing using scaling or one-hot-encoding based on column type
 2. `find_elbow(X)` - Automatic hyperparameter tuning to select optimal number of clusters, `k`
 3. `fit_assign(X, k)` - Wrapper function that calls `fit(X, k)` and `assign(X, centres)`
     - `fit(X, k)` - finds centroid location for all of the `k` clusters
@@ -38,7 +38,7 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
 
 | Task | Function  |
 |------------|-----|
-| Scale numerical features| `km.preprocess(df)`|
+| Scale numeric features and use OHE on categorical features| `km.preprocess(df)`|
 | Find list of centroid points| `km.fit(df, 3)`|
 | Assign new data point to cluster| `km.assign(df, array2d)`|
 | Find optimal number of cluster| `km.fit_elbow(df)`|
