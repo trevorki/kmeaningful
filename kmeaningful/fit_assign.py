@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import random
-# import matplotlib.pyplot as plt
 
 def init_centers(X, k):
     """
@@ -34,8 +33,8 @@ def init_centers(X, k):
     if k <= 0:
         raise Exception("Number of clusters must be a positive integer")
     # Throw error if X is empty
-    if X.shape[0] <= 1:
-        raise Exception("Input data must have at least two rows")
+    if X.shape[0] < 1:
+        raise Exception("Input data must have at least one row")
 
     n = X.shape[0]
     dimensions = X.shape[1]
@@ -234,7 +233,6 @@ def fit(X, k):
     labels = assign(X, centers) # assign cluster label based on closest center
     new_centers = calc_centers(X, centers, labels)
     new_labels = assign(X, centers)
-    # plot_clusters(X, centers, labels = new_labels, title = f"Initial clusters")
 
     i += 1               #initialize iteration counter
 
@@ -286,7 +284,7 @@ def fit_assign(X, k):
     except:
         raise Exception("Input format not accepted")
     #  Throw error if k is not an integer
-    if isinstance(k, int):
+    if isinstance(k, int) == False:
         raise Exception("k must be an integer")
 
 

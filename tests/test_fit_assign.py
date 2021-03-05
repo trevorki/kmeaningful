@@ -1,5 +1,5 @@
 from kmeaningful import __version__
-from kmeaningful.fit_assign import init_centers, assign, measure_dist, calc_centers, fit, fit_assign, plot_clusters
+from kmeaningful.fit_assign import init_centers, assign, measure_dist, calc_centers, fit, fit_assign
 import pandas as pd
 import numpy as np
 import random
@@ -11,13 +11,14 @@ def test_version():
 
 def test_init_centers():
     """Tests that `init_centers()` is working properly"""
-    
+    X = np.ones([2,2])
+    k = 3
     # more clusters than points should throw an error
-    pytest.raises(Exception, init_centers, [np.ones([2,2]), 3])
+    pytest.raises(Exception, init_centers, [X, k])
     # k = 0 clusters should throw an error
-    pytest.raises(Exception, init_centers, [np.ones([2,2]), 0])
-    # only one data point should throw an error
-    pytest.raises(Exception, init_centers, [np.ones([1,2]), 1])
+    pytest.raises(Exception, init_centers, [X, 0])
+    # no data points should throw an error
+    pytest.raises(Exception, init_centers, [np.array([]), 1])
 
     # centers are initialized to different points
     centers = init_centers(np.array([[0, 0], [1, 1]]), 2)
@@ -34,10 +35,12 @@ def test_init_centers():
 def test_assign():
     """Tests that `assign()` is working properly"""
     # different width X and centers should throw an error
-    pytest.raises(Exception, assign, [np.ones((100,2)), np.ones((10,3))])
-    # more clusters than data points should throw an error
-    pytest.raises(Exception, assign, [np.ones((10,2)), np.ones((100,2))])
-   
+    X = np.ones((10,2))
+    centers = np.ones((10,3))
+    pytest.raises(Exception, assign, [X, centers])
+     # more centers than data points should throw an error
+    centers = np.ones((11,2))
+    pytest.raises(Exception, measure_dist, [X, centers])  
     
     # check that it returns correct label 
     X = np.array([[1], [9]])
@@ -55,12 +58,15 @@ def test_assign():
     assert np.array_equal(assign(X, centers), np.array([0, 0]))
 
 def test_measure_dist():
-    """Tests that `measure_dists` is working properly"""
+    """Tests that `measure_dist` is working properly"""
 
     # different width X and centers should throw an error
-    pytest.raises(Exception, measure_dists, [np.ones((100,2)), np.ones((10,3))])
+    X = np.ones((10,2))
+    centers = np.ones((10,3))
+    pytest.raises(Exception, measure_dist, [X, centers])
     # more centers than data points should throw an error
-    pytest.raises(Exception, measure_dists, [np.ones((10,2)), np.ones((100,2))])
+    centers = np.ones((11,2))
+    pytest.raises(Exception, measure_dist, [X, centers])
     
 
     # check that it calculates 2-d distance correctly
@@ -74,18 +80,20 @@ def test_measure_dist():
     assert measure_dist(X, center).item() == 0
 
     # check that for one distance is calculated for each center
-    X = np.array([[0,0]])
-    centers = np.array([[0,1], [0,2], [0,3]])
-    assert (measure_dist(X, centers) == np.array([1,2,3])).all()
+    X = np.array([[0,1], [0,2], [0,3]])
+    centers = np.array([[0,0]])
+    assert (measure_dist(X, centers) == np.array([[1],[2],[3]])).all()
     
 
-def test_calc_centers(X, centers, labels):
+def test_calc_centers():
     """Tests that `calc_centers` is working properly"""
-
+    X = np.ones((10,2))
+    centers = np.ones((2,1))
+    labels = np.ones(9)
     # different lengths for data X and labels should throw an error
-    pytest.raises(Exception, calc_centers, [np.ones((10,2)),np.ones(9)])
+    pytest.raises(Exception, calc_centers, [X, centers, labels])
     # different width for data X and centers should throw an error
-    pytest.raises(Exception, calc_centers, [np.ones((10,2)),np.ones(2,3)])
+    pytest.raises(Exception, calc_centers, [X, centers, labels])
 
 
     # check one center is correctly calculated
@@ -103,15 +111,20 @@ def test_calc_centers(X, centers, labels):
     # 
 
 
-def test_fit(X, k):
+def test_fit():
     """Tests that `fit` is working properly"""
 
     # should throw an error if X contains missing values
-    pytest.raises(Exception, fit_assign, [np.array([[np.nan], [0]]), np.ones(2,2)])
+    X = np.array([[np.nan], [0]])
+    k = 1
+    pytest.raises(Exception, fit_assign, [X, k])
     # should throw an error if X is not array-like
-    pytest.raises(Exception, fit, [123, np.ones(2,2)])
+    X = 1000
+    pytest.raises(Exception, fit, [X, k])
     # should throw an error if k is not an integer
-    pytest.raises(Exception, fit, [np.ones(2,2), 1.5])
+    X = np.ones((2,2))
+    k = 1.5
+    pytest.raises(Exception, fit, [X, k])
     
     # check that four points are correctly assigned to four clusters
     X = np.array([[0,0], [0,2], [10,0], [10,2]])
@@ -128,15 +141,16 @@ def test_fit(X, k):
     centers = np.array([[5,1]])
     assert all([fit(X,1)[i].tolist() in centers.tolist() for i in range(centers.shape[0])])
 
-def test_fit_assign(X, k):
+def test_fit_assign():
     """Tests that `fit_assign` is working properly"""
-
+    X = np.array([[np.nan], [0]])
+    k = 2
     # should throw an error if X contains missing values
-    pytest.raises(Exception, fit_assign, [np.array([[np.nan], [0]]), np.ones(2,2)])
+    pytest.raises(Exception, fit_assign, [X, k])
     # should throw an error if X is not array-like
-    pytest.raises(Exception, fit_assign, [123, np.ones(2,2)])
+    pytest.raises(Exception, fit, [123, k])
     # should throw an error if k is not an integer
-    pytest.raises(Exception, fit_assign, [np.ones(2,2), 1.5])
+    pytest.raises(Exception, fit_assign, [X, 1.5])
 
     # check centers and labels for 8 points and 4 clusters
     X = np.array([[-1,0], [1,0], [9,0], [11,0], [-1,10], [1,10], [9,10], [11,10]])
