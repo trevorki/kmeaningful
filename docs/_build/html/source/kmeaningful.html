@@ -40,19 +40,19 @@
 <dl class="py function">
 <dt id="kmeaningful.find_elbow.find_elbow">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.find_elbow.</span></code><code class="sig-name descname"><span class="pre">find_elbow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/find_elbow.html#find_elbow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.find_elbow.find_elbow" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to 10.</p>
-<p>It returns the value for K which minimizes the sum of square distance between points and cluster centers.</p>
+<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to the min(10, n_samples - 1).</p>
+<p>It returns the value for K which maximizes the mean silhouette scores for all clusters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
+<li><p><strong>X</strong> (<em>numpy ndarray</em>) – </p></li>
 <li><p><strong>data to train clustering model with.</strong> (<em>Pre-scaled</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>int</em></p></li>
-<li><p><em>The value for K which minimizes the sum of squared distance between points and cluster centers.</em></p></li>
+<li><p><strong>optimal_K</strong> (<em>int</em>)</p></li>
+<li><p><em>The value for K which maximizes the mean silhouette scores across all clusters.</em></p></li>
 </ul>
 </p>
 </dd>
