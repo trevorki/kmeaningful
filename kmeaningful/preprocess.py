@@ -9,8 +9,8 @@ def preprocess(X):
 
     Returns
     -------
-    DataFrame
-    A DataFrame with appropriate preprocessing steps applied.
+    Array
+    An array with appropriate preprocessing steps applied.
 
     Examples
     --------
