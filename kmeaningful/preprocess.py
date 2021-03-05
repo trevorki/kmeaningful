@@ -9,12 +9,12 @@ def preprocess(X):
 
     Parameters
     ----------
-    X : DataFrame or ndarray
+    X : DataFrame or Array
     Unprocessed data on which to apply preprocessing steps.
 
     Returns
     -------
-    ndarray
+    Numpy ndarray
     An array representing the data after appropriate preprocessing steps are applied.
 
     Examples
