@@ -1,5 +1,6 @@
 from sklearn.metrics import silhouette_score
 from kmeaningful.fit_assign import fit_assign
+import numpy as np
 
 
 def find_elbow(X):
@@ -26,15 +27,20 @@ def find_elbow(X):
     >>> optimal_K = find_elbow(processed_data)
     
     """
-    # Raise error for bad input
-    # This is needed because silhouette score is only defined for 1 < n_labels < n_samples
+    # Raise exception for bad input
+    if not type(X) == np.ndarray:
+        raise Exception(
+            f"Please provide a numpy ndarray as input. Input type detected: {type(X)}"
+        )
+
+    # This check is needed because silhouette score is only defined for 1 < n_labels < n_samples
     if len(X) < 3:
         raise Exception("Please provide a numpy ndarray with at least three rows")
 
-    # Calculate the max possible value for K
+    # Calculate the max possible value for K given the input data
     max_clusters = min(10, X.shape[0] - 1)
 
-    # Calculate silhouette score for each K
+    # Calculate the mean silhouette score for each K
     scores = dict()
     for K in range(2, max_clusters + 1):
         _, labels = fit_assign(X, K)

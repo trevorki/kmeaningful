@@ -7,11 +7,14 @@ import pytest
 
 def test_find_elbow():
 
-    # empty array should raise exception
+    # non numpy.ndarray input should raise exception
+    assert pytest.raises(Exception, find_elbow, 1)
+
+    # empty array input should raise exception
     empty = np.ndarray(0)
     assert pytest.raises(Exception, find_elbow, empty)
 
-    # 1 row array should raise exception
+    # 1 row array input should raise exception
     single_row = np.ones((1, 2))
     assert pytest.raises(Exception, find_elbow, single_row)
 
