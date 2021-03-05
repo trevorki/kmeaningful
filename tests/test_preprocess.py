@@ -46,16 +46,19 @@ def test_preprocess():
     # handle missing data with imputation
     X = pd.DataFrame({"col1":[None], "col2": [1]})
     expected_output = np.array([[0., 0.]])  # should be filled in with mean and then scaled
-    assert (expected_output == preprocess(X)).all()
+    assert (preprocess(X) == expected_output).all()
 
     # reject when all data missing
-    X = pd.DataFrame({"col1":[None]})
+    X = [[None, None], [None, None]]
     assert pytest.raises(Exception, preprocess, X)
 
-    # reject when all data missing - multidimentional
-    X = pd.DataFrame({"col1":[None, None], "col2":[None, None]})
-    assert pytest.raises(Exception, preprocess, X)
-
-    # reject non-numeric data (may change to auto-detect)
-    X = pd.DataFrame({"col1":["string"]})
-    assert pytest.raises(Exception, preprocess, X)
+    # use correct one-hot-encoding for categorical data
+    X = [["neutral", "large"],["neutral", "medium"]]
+    expected_output = np.array([[1., 1., 0.], [1., 0., 1.]])
+    assert (preprocess(X) == expected_output).all()
+    
+    # possibly update in future to use BOW encoding for other non-numeric data 
+    # e.g. length > 20 and no repeated words in col
+    
+    
+    
