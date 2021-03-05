@@ -34,8 +34,8 @@ def init_centers(X, k):
     if k <= 0:
         raise Exception("Number of clusters must be a positive integer")
     # Throw error if X is empty
-    if X.shape[0] == 0:
-        raise Exception("Input data must have at least one row")
+    if X.shape[0] <= 1:
+        raise Exception("Input data must have at least two rows")
 
     n = X.shape[0]
     dimensions = X.shape[1]
@@ -89,11 +89,8 @@ def assign(X, centers):
     if X.shape[1] != centers.shape[1]:
         raise Exception("`X` and `centers` must have the same width")
     # Throw error if there are more centers than data points
-    if X.shape[0] <= centers.shape[0]:
+    if X.shape[0] < centers.shape[0]:
         raise Exception("There are more centers than data points")
-    # Throw error if there are no centers
-    if centers.shape[0] == 1:
-        raise Exception("There are no centers defined")
 
 
     n = X.shape[0]
@@ -134,11 +131,8 @@ def measure_dist(X, centers):
     if X.shape[1] != centers.shape[1]:
         raise Exception("`X` and `centers` must have the same width")
     # Throw error if there are more centers than data points
-    if X.shape[0] <= centers.shape[0]:
+    if X.shape[0] < centers.shape[0]:
         raise Exception("There are more centers than data points")
-    # Throw error if there are no centers
-    if centers.shape[0] == 0:
-        raise Exception("There are no centers defined")
 
 
     n = X.shape[0]
@@ -220,14 +214,14 @@ def fit(X, k):
     >>> centers = fit(X, 3)
     
     """
-    # Throw error if X contains nan values
-    if np.isnan(X).any():
-        raise Exception("Array contains missing data")
+    # Throw error if X contains missing values
+    if np.isnan(np.sum(X)):
+        raise Exception("Array contains non-numeric data")
     # Throw error if X is not array-like
     try: 
         df = pd.DataFrame(X)
     except:
-        raise Exception("Input format not accepted")
+        raise Exception("Data must be an array")
     #  Throw error if k is not an integer
     if isinstance(k, int) != True:
         raise Exception("k must be an integer")
@@ -282,9 +276,10 @@ def fit_assign(X, k):
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
     >>> centers, labels = fit_assign(X, 3, centers)
     """
-    # Throw error if X contains nan values
-    if np.isnan(X).any():
-        raise Exception("Array contains missing data")
+    # Throw error if X contains missing values
+    if np.isnan(np.sum(X)):
+        raise Exception("Array contains non-numeric data")
+
     # Throw error if X is not array-like
     try: 
         df = pd.DataFrame(X)
