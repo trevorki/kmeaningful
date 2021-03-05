@@ -1,6 +1,7 @@
-
-
-
+import pandas as pd
+import numpy as np
+import random
+import matplotlib.pyplot as plt
 
 def init_centers(X, k):
     """
@@ -25,10 +26,21 @@ def init_centers(X, k):
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
     >>> intial_centers = init(X, 3)    
     """
+
+    # Throw error if k > number of data points
+    if k > X.shape[0]:
+        raise Exception("Number of clusters must be less than number of data points")
+     # Throw error if k is negative
+    if k <= 0:
+        raise Exception("Number of clusters must be a positive integer")
+    # Throw error if X is empty
+    if X.shape[0] == 0:
+        raise Exception("Input data must have at least one row")
+
     n = X.shape[0]
     dimensions = X.shape[1]
     centers = np.zeros((k, dimensions))
-    ind = []
+    ind = []             #indeces of existing centers
 
     # pick 1st center at random
     ind.append(random.randint(0,n-1))
@@ -36,12 +48,12 @@ def init_centers(X, k):
 
     #find rest of centers
     for kk in range(1, k):
-        dists_sq = measure_dist(X, centers[0:kk])**2
-        for i in ind:                                    # set distance between centers to 0
+        dists_sq = measure_dist(X, centers[0:kk])**2     # measure distance from every point to current center
+        for i in ind:                                    # set distance between existing centers to 0
             dists_sq[i] = np.zeros((1,dists_sq.shape[1]))
-        dists_sq[dists_sq == 0] = np.inf                 # replace 0 with inf
+        dists_sq[dists_sq == 0] = np.inf                 # replace 0 with inf so they don't get selected
         dists_sq = dists_sq.min(axis = 1)                # select minimum distance in row
-        dists_sq[dists_sq == np.inf] = 0                 # replace inf with 0 again
+        dists_sq[dists_sq == np.inf] = 0                 # replace inf with 0 again to make probability of selecting existing center zero
         probs = (dists_sq / np.sum(dists_sq)).tolist()   # probability prop to dist_sq
         ind.append(np.random.choice(range(len(probs)), size=1, p=probs)) #select point at random
         centers[kk,] = X[ind[-1]]
@@ -71,7 +83,19 @@ def assign(X, centers):
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
     >>> centers = fit(X, 3)
     >>> cluster_assignments = predict(X, centers)
-    """    
+    """ 
+
+    # Throw error if X and centers have different widths
+    if X.shape[1] != centers.shape[1]:
+        raise Exception("`X` and `centers` must have the same width")
+    # Throw error if there are more centers than data points
+    if X.shape[0] <= centers.shape[0]:
+        raise Exception("There are more centers than data points")
+    # Throw error if there are no centers
+    if centers.shape[0] == 1:
+        raise Exception("There are no centers defined")
+
+
     n = X.shape[0]
     k = centers.shape[0]
     labels = np.zeros(n, dtype = int)
@@ -106,6 +130,17 @@ def measure_dist(X, centers):
     >>> centers = fit(X, 3)
     >>> distances = predict(X, centers)
     """
+    # Throw error if X and centers have different widths
+    if X.shape[1] != centers.shape[1]:
+        raise Exception("`X` and `centers` must have the same width")
+    # Throw error if there are more centers than data points
+    if X.shape[0] <= centers.shape[0]:
+        raise Exception("There are more centers than data points")
+    # Throw error if there are no centers
+    if centers.shape[0] == 0:
+        raise Exception("There are no centers defined")
+
+
     n = X.shape[0]
     k = centers.shape[0]
     distances = np.zeros((n,k))
@@ -138,14 +173,21 @@ def calc_centers(X, centers, labels):
     The distances from each point to each center. Dimensions: (n, k)
     
     """
+    #  Throw error if `X` and `labels` have different lengths
+    if X.shape[0] != len(labels):
+        raise Exception("The number of labels is different from the number of points")
+    # Throw error if `X` and `centers` have different widths
+    if X.shape[1] != centers.shape[1]:
+        raise Exception("`X` and `centers` must have the same width")
+
     n = X.shape[0]
     d = X.shape[1]
     k = centers.shape[0]
     
     new_centers = np.zeros((k,d))
     for kk in range(k):
-        new_center = [np.mean(X[labels == kk][:,dd]) for dd in range(d)]
-        if np.isnan(np.sum(new_center)) == False:
+        new_center = [np.mean(X[labels == kk][:,dd]) for dd in range(d)] # 
+        if np.isnan(np.sum(new_center)) == False:   # If there 
             new_centers[kk] = new_center
         else:                                 # if there is no nearest point, assign to farthest point
             dists = measure_dist(X, centers[kk])
@@ -178,6 +220,18 @@ def fit(X, k):
     >>> centers = fit(X, 3)
     
     """
+    # Throw error if X contains nan values
+    if np.isnan(X).any():
+        raise Exception("Array contains missing data")
+    # Throw error if X is not array-like
+    try: 
+        df = pd.DataFrame(X)
+    except:
+        raise Exception("Input format not accepted")
+    #  Throw error if k is not an integer
+    if isinstance(k, int) != True:
+        raise Exception("k must be an integer")
+
     # initialize cluster centers and assign points to clusters
     centers = init_centers(X, k)
     i = 0    # iteration counter
@@ -228,6 +282,19 @@ def fit_assign(X, k):
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
     >>> centers, labels = fit_assign(X, 3, centers)
     """
+    # Throw error if X contains nan values
+    if np.isnan(X).any():
+        raise Exception("Array contains missing data")
+    # Throw error if X is not array-like
+    try: 
+        df = pd.DataFrame(X)
+    except:
+        raise Exception("Input format not accepted")
+    #  Throw error if k is not an integer
+    if isinstance(k, int):
+        raise Exception("k must be an integer")
+
+
     centers = fit(X, k)
     labels = assign(X, centers)
        
