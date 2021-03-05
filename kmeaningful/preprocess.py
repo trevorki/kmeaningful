@@ -35,6 +35,9 @@ def preprocess(X):
         df = pd.DataFrame(X)
     except:
         raise Exception("Input format not accepted")
+        
+    if sum(pd.isna(df).all()):
+        raise Exception("Please provide at least one non-null value in each column")
     
     numeric_features = df.select_dtypes("number").columns
     categorical_features = df.select_dtypes("object").columns
