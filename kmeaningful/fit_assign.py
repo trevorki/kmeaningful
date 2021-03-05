@@ -272,7 +272,7 @@ def fit_assign(X, k):
     --------
     >>> from sklearn.datasets import make_blobs
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
-    >>> centers, labels = fit_assign(X, 3, centers)
+    >>> centers, labels = fit_assign(X, 3)
     """
     # Throw error if X contains missing values
     if np.isnan(np.sum(X)):
