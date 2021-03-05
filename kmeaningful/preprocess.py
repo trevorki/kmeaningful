@@ -39,14 +39,17 @@ def preprocess(X):
     if sum(pd.isna(df).all()):
         raise Exception("Please provide at least one non-null value in each column")
     
+    # auto-detect feature type
     numeric_features = df.select_dtypes("number").columns
     categorical_features = df.select_dtypes("object").columns
     
+    # impute and scale numeric features
     numeric_transformer = make_pipeline(
         SimpleImputer(),
         StandardScaler()
     )
     
+    # use OHE for all other features
     categorical_transformer = make_pipeline(
         OneHotEncoder(handle_unknown="ignore")
     )
