@@ -6,6 +6,7 @@ import pytest
 
 
 def test_find_elbow():
+    """Test cases for the find_elbow function"""
 
     # non numpy.ndarray input should raise exception
     assert pytest.raises(Exception, find_elbow, 1)

@@ -16,8 +16,8 @@ def find_elbow(X):
 
     Returns
     -------
-    int
-    The value for K which maximizes the mean silhouette scores for all clusters.
+    optimal_K: int
+    The value for K which maximizes the mean silhouette scores across all clusters.
 
     Examples
     --------

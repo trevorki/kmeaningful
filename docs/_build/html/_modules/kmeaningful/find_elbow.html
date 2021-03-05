@@ -31,21 +31,26 @@
           <div class="body" role="main">
             
   <h1>Source code for kmeaningful.find_elbow</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="find_elbow"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.find_elbow.find_elbow">[docs]</a><span></span><span class="k">def</span> <span class="nf">find_elbow</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span>
+<span class="kn">from</span> <span class="nn">kmeaningful.fit_assign</span> <span class="kn">import</span> <span class="n">fit_assign</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="find_elbow"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.find_elbow.find_elbow">[docs]</a><span class="k">def</span> <span class="nf">find_elbow</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to 10.</span>
+<span class="sd">    This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to the min(10, n_samples - 1).</span>
 <span class="sd">    </span>
-<span class="sd">    It returns the value for K which minimizes the sum of square distance between points and cluster centers.</span>
+<span class="sd">    It returns the value for K which maximizes the mean silhouette scores for all clusters.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    X : DataFrame</span>
+<span class="sd">    X : numpy ndarray</span>
 <span class="sd">    Pre-scaled data to train clustering model with.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    int</span>
-<span class="sd">    The value for K which minimizes the sum of squared distance between points and cluster centers.</span>
+<span class="sd">    optimal_K: int</span>
+<span class="sd">    The value for K which maximizes the mean silhouette scores across all clusters.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -54,7 +59,29 @@
 <span class="sd">    &gt;&gt;&gt; processed_data = preprocess(X)</span>
 <span class="sd">    &gt;&gt;&gt; optimal_K = find_elbow(processed_data)</span>
 <span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Raise exception for bad input</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Please provide a numpy ndarray as input. Input type detected: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># This check is needed because silhouette score is only defined for 1 &lt; n_labels &lt; n_samples</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Please provide a numpy ndarray with at least three rows&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Calculate the max possible value for K given the input data</span>
+    <span class="n">max_clusters</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Calculate the mean silhouette score for each K</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_clusters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">fit_assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+        <span class="n">sil_score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">scores</span><span class="p">[</span><span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">sil_score</span>
+
+    <span class="c1"># Return value for K which results in greatest silhouette score</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">scores</span><span class="p">[</span><span class="n">k</span><span class="p">])</span></div>
 </pre></div>
 
           </div>
