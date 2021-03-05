@@ -1,6 +1,7 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
+from sklearn.compose import make_column_transformer
 from sklearn.pipeline import make_pipeline
 
 def preprocess(X):
@@ -28,8 +29,30 @@ def preprocess(X):
     # Throw error for empty dataframe, alternative is to return empty
     if len(X) < 1:
         raise Exception("Please provide a dataframe X with at least one row as input")
-        
-    preprocess_pipe = make_pipeline(SimpleImputer(), StandardScaler())
-    X_processed = preprocess_pipe.fit_transform(X)
+    
+    # Throw error if input is not array-like
+    try: 
+        df = pd.DataFrame(X)
+    except:
+        raise Exception("Input format not accepted")
+    
+    numeric_features = df.select_dtypes("number").columns
+    categorical_features = df.select_dtypes("object").columns
+    
+    numeric_transformer = make_pipeline(
+        SimpleImputer(),
+        StandardScaler()
+    )
+    
+    categorical_transformer = make_pipeline(
+        OneHotEncoder(handle_unknown="ignore")
+    )
+    
+    preprocessor = make_column_transformer(
+        (numeric_transformer, numeric_features), 
+        (categorical_transformer, categorical_features)
+    )
+    
+    X_processed = preprocessor.fit_transform(X)
 
     return X_processed
