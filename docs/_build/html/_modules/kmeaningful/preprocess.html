@@ -42,12 +42,12 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    X : DataFrame or Array</span>
-<span class="sd">    Unprocessed data on which to apply preprocessing steps.</span>
+<span class="sd">    X : Array-like of shape (n_samples, n_features)</span>
+<span class="sd">    Unprocessed data on which to apply preprocessing steps, can be in form of DataFrame or Array</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    Numpy ndarray</span>
+<span class="sd">    Numpy ndarray of shape (n_samples, n_features_new)</span>
 <span class="sd">    An array representing the data after appropriate preprocessing steps are applied.</span>
 
 <span class="sd">    Examples</span>
@@ -63,8 +63,7 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Please provide a dataframe X with at least one row as input&quot;</span><span class="p">)</span>
         
     <span class="n">preprocess_pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(),</span> <span class="n">StandardScaler</span><span class="p">())</span>
-    <span class="n">preprocess_pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">X_processed</span> <span class="o">=</span> <span class="n">preprocess_pipe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">X_processed</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">X_processed</span></div>
 </pre></div>
