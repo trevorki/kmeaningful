@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.compose import make_column_transformer
@@ -39,15 +41,19 @@ def preprocess(X):
     if sum(pd.isna(df).all()):
         raise Exception("Please provide at least one non-null value in each column")
     
+    # auto-detect feature type
     numeric_features = df.select_dtypes("number").columns
     categorical_features = df.select_dtypes("object").columns
     
+    # impute and scale numeric features
     numeric_transformer = make_pipeline(
         SimpleImputer(),
         StandardScaler()
     )
     
+    # use OHE for all other features
     categorical_transformer = make_pipeline(
+        SimpleImputer(missing_values=[None, np.nan], strategy="constant", fill_value=""),
         OneHotEncoder(handle_unknown="ignore")
     )
     

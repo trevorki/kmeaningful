@@ -61,6 +61,11 @@ def test_preprocess():
     expected_output = np.array([[1., 1., 0.], [1., 0., 1.]])
     assert (preprocess(X) == expected_output).all()
     
+    # use combination of scaling and OHE for combo data
+    X = [[2, "medium", "neutral"], [None, None, "neutral"]]
+    expected_output = np.array([[0., 0., 1., 1.], [0., 1., 0., 1.]])
+    assert (preprocess(X) == expected_output).all()
+    
     # possibly update in future to use BOW encoding for other non-numeric data 
     # e.g. length > 20 and no repeated words in col
     
