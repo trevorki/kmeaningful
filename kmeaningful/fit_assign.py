@@ -74,8 +74,8 @@ def assign(X, centers):
 
     Returns
     -------
-    list
-    A list with the cluster assignments for the data.
+    array
+    The cluster assignments for the data.
     
     Examples
     --------
@@ -162,15 +162,15 @@ def calc_centers(X, centers, labels):
     Data for cluster assignment. Dimensions: (n,d)
 
     centers : array
-    The locations of the cluster centers. Dimensions: (k,d)
+    The locations of the cluster centers. Dimensions: (k,d). Used only to determine number of clusters
     
-    labels: list
-    The assigned cluster for each data point in X. Length: n
+    labels: array
+    The assigned cluster for each data point in X. Dimensions: (n,)
 
     Returns
     -------
     array
-    The distances from each point to each center. Dimensions: (n, k)
+    A (k,d) array of the center locations for each cluster.
     
     """
     #  Throw error if `X` and `labels` have different lengths
@@ -211,7 +211,7 @@ def fit(X, k):
     Returns
     -------
     array
-    A (k,d) array of the center locations for each cluster where d = number of dimensions.
+    A (k,d) array of the center locations for each cluster.
     
     Examples
     --------
@@ -299,19 +299,3 @@ def fit_assign(X, k):
     labels = assign(X, centers)
        
     return centers, labels
-
-
-
-# plotting functions
-def plot_clusters(X, centers, labels = None, title = ""):
-    """
-    makes a 2d plot of points in `X`, the cluster centers in `clusters`,
-    coloured by nearest cluster contained in `labels`
-    """
-    colours = range(len(centers))
-    plt.scatter(X[:, 0], X[:, 1], s = 10, c = labels, alpha = 0.4)
-    plt.scatter(centers[:, 0], centers[:, 1], s = 400, 
-                    marker = '*', c = colours)
-    plt.title(title);
-    plt.show()
-    return
