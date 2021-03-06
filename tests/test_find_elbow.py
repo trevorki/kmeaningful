@@ -8,6 +8,10 @@ import pytest
 def test_find_elbow():
     """Test cases for the find_elbow function"""
 
+    # Fix random seed to prevent randomness in test cases
+    # This is needed because there is randomness in the way k-means is initialized
+    np.random.seed(1234)
+
     # non numpy.ndarray input should raise exception
     assert pytest.raises(Exception, find_elbow, 1)
 
