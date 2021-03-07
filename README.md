@@ -31,6 +31,7 @@ $ pip install -i https://test.pypi.org/simple/kmeaningful
     - pandas==^1.2.3
     - pytest==6.2.2 
     - sklearn==^0.0 
+    - altair==^4.1.0
 
 ## Usage
 
