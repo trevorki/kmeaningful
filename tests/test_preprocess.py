@@ -35,13 +35,9 @@ def test_preprocess():
     expected_output = np.array([[0., 0.]])
     assert (preprocess(X) == expected_output).all()
 
-    # scaling is working as expected
+    # imputation is working as expected
     X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
     processed_data = preprocess(X)
-    assert X.max() >= processed_data.max()
-    assert X.min() <= processed_data.min()
-
-    # imputation is working as expected
     mask = np.random.choice([True, False], size=X.shape) 
     X[mask] = None  # set entries as None at random
     assert np.isnan(X).any()  # check that test code working
