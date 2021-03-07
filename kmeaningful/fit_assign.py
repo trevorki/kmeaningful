@@ -126,13 +126,10 @@ def measure_dist(X, centers):
     >>> centers = fit(X, 3)
     >>> distances = predict(X, centers)
     """
-    # Throw error if X and centers have different widths
-    if X.shape[1] != centers.shape[1]:
-        raise Exception("`X` and `centers` must have the same width")
+
     # Throw error if there are more centers than data points
     if X.shape[0] < centers.shape[0]:
         raise Exception("There are more centers than data points")
-
 
     n = X.shape[0]
     k = centers.shape[0]
@@ -169,9 +166,11 @@ def calc_centers(X, centers, labels):
     #  Throw error if `X` and `labels` have different lengths
     if X.shape[0] != len(labels):
         raise Exception("The number of labels is different from the number of points")
+    
     # Throw error if `X` and `centers` have different widths
     if X.shape[1] != centers.shape[1]:
         raise Exception("`X` and `centers` must have the same width")
+
 
     n = X.shape[0]
     d = X.shape[1]
@@ -179,15 +178,16 @@ def calc_centers(X, centers, labels):
     
     new_centers = np.zeros((k,d))
     for kk in range(k):
-        new_center = [np.mean(X[labels == kk][:,dd]) for dd in range(d)] # 
-        if np.isnan(np.sum(new_center)) == False:   # If there 
-            new_centers[kk] = new_center
-        else:                                 # if there is no nearest point, assign to farthest point
+        current_center = [np.mean(X[labels == kk][:,dd]) for dd in range(d)] # mean of points assigned to center kk for each dimension
+        if np.isnan(np.sum(current_center)) == False:  # If there are points assigned to current center   
+            new_centers[kk] = current_center       # add current center to new_centers
+        else:                                      # if there is points assigned to nearest center
             dists = measure_dist(X, centers[kk])
-            new_centers[kk] = X[np.argmax(dists)//d,]  
+            new_centers[kk] = X[np.argmax(dists)//d,]  # set new center to farthest point from current center
             print(f"centre {kk} has no nearest points, reassign to {new_centers[kk]}")
             
     return new_centers
+
 
 def fit(X, k):
     """
@@ -216,6 +216,7 @@ def fit(X, k):
     # Throw error if X contains missing values
     if np.isnan(np.sum(X)):
         raise Exception("Array contains non-numeric data")
+
     # Throw error if X is not array-like
     try: 
         df = pd.DataFrame(X)
