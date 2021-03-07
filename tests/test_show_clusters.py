@@ -1,5 +1,6 @@
 from kmeaningful.show_clusters import show_clusters
 from sklearn.datasets import make_blobs
+import pandas as pd
 import pytest
 
 def test_show_clusters():
@@ -24,6 +25,6 @@ def test_show_clusters():
     
     assert a.layer[1].encoding.x.shorthand == 'pca1','x axis should be pca1'
     assert a.layer[1].encoding.y.shorthand =='pca2', 'y axis should be pca2'
-    assert a.layer[1].mark.type == 'circle', 'mark.type of layer[1] should be point'
+    assert a.layer[1].mark.type == 'point', 'mark.type of layer[1] should be point'
     
     print('test_show_clusters() passed')

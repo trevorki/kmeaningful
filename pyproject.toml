@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.8"
 pandas = "^1.2.3"
 sklearn = "^0.0"
+altair = "^4.1.0"
 
 [tool.poetry.dev-dependencies]
 Sphinx = "^3.5.1"
