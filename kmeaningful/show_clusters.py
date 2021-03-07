@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn.decomposition import PCA
-
 import altair as alt
 
 def show_clusters(data, clusters, centroids = None):

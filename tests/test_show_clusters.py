@@ -1,6 +1,6 @@
-from kmeaningful.show_cluster import show_cluster
+from kmeaningful.show_clusters import show_clusters
 from sklearn.datasets import make_blobs
-import altair as alt
+import pytest
 
 def test_show_clusters():
     X, y = make_blobs(n_samples=20, centers=3, n_features=3, random_state=10)
