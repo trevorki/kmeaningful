@@ -12,10 +12,10 @@ kmeaningful.find\_elbow module
    :undoc-members:
    :show-inheritance:
 
-kmeaningful.fit\_predict module
--------------------------------
+kmeaningful.fit\_assign module
+------------------------------
 
-.. automodule:: kmeaningful.fit_predict
+.. automodule:: kmeaningful.fit_assign
    :members:
    :undoc-members:
    :show-inheritance:

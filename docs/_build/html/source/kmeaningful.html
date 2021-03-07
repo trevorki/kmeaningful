@@ -67,26 +67,25 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-kmeaningful.fit_predict">
-<span id="kmeaningful-fit-predict-module"></span><h2>kmeaningful.fit_predict module<a class="headerlink" href="#module-kmeaningful.fit_predict" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-kmeaningful.fit_assign">
+<span id="kmeaningful-fit-assign-module"></span><h2>kmeaningful.fit_assign module<a class="headerlink" href="#module-kmeaningful.fit_assign" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="kmeaningful.fit_predict.fit">
-<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_predict.</span></code><code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_predict.html#fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_predict.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</p>
-<p>It returns an array of the coordinates of the k cluster centers.</p>
+<dt id="kmeaningful.fit_assign.assign">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">assign</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.assign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns data to clusters based on Euclidean distance to the nearest centroid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
-<li><p><strong>data to train clustering model with.</strong> (<em>Pre-scaled</em>) – </p></li>
-<li><p><strong>k</strong> (<em>int</em>) – </p></li>
-<li><p><strong>number of clusters to use for Kmeans.</strong> (<em>The</em>) – </p></li>
+<li><p><strong>X</strong> (<em>array</em>) – </p></li>
+<li><p><strong>for cluster assignment.  Dimensions</strong> (<em>Data</em>) – </p></li>
+<li><p><strong>centers</strong> (<em>array</em>) – </p></li>
+<li><p><strong>locations of the cluster centers.</strong> (<em>The</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><em>array</em></p></li>
-<li><p><em>A (k,d) array of the center locations for each cluster where d = number of dimensions.</em></p></li>
+<li><p><em>The cluster assignments for the data.</em></p></li>
 </ul>
 </p>
 </dd>
@@ -94,28 +93,83 @@
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_assignments</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kmeaningful.fit_predict.fit_predict">
-<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_predict.</span></code><code class="sig-name descname"><span class="pre">fit_predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_predict.html#fit_predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_predict.fit_predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</p>
-<p>It returns a list of the cluster labels for each point.</p>
+<dt id="kmeaningful.fit_assign.calc_centers">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">calc_centers</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#calc_centers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.calc_centers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the coordinates of the centroid of each cluster</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
-<li><p><strong>data to train clustering model with.</strong> (<em>Pre-scaled</em>) – </p></li>
+<li><p><strong>X</strong> (<em>array</em>) – </p></li>
+<li><p><strong>for cluster assignment. Dimensions</strong> (<em>Data</em>) – </p></li>
+<li><p><strong>centers</strong> (<em>array</em>) – </p></li>
+<li><p><strong>locations of the cluster centers. Dimensions</strong> (<em>The</em>) – </p></li>
+<li><p><strong>labels</strong> (<em>array</em>) – </p></li>
+<li><p><strong>assigned cluster for each data point in X. Dimensions</strong> (<em>The</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>array</em></p></li>
+<li><p><em>A (k,d) array of the center locations for each cluster.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kmeaningful.fit_assign.fit">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array</em>) – </p></li>
+<li><p><strong>to train clustering model with.  Dimensions</strong> (<em>Data</em>) – </p></li>
 <li><p><strong>k</strong> (<em>int</em>) – </p></li>
 <li><p><strong>number of clusters to use for Kmeans.</strong> (<em>The</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
+<li><p><em>array</em></p></li>
+<li><p><em>A (k,d) array of the center locations for each cluster.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kmeaningful.fit_assign.fit_assign">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">fit_assign</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#fit_assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.fit_assign" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes in data and performs clustering using the KMeans clustering algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array</em>) – </p></li>
+<li><p><strong>data to train clustering model with. Dimensions</strong> (<em>Pre-scaled</em>) – </p></li>
+<li><p><strong>k</strong> (<em>int</em>) – </p></li>
+<li><p><strong>number of clusters to use for Kmeans.</strong> (<em>The</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>array</em></p></li>
+<li><p><em>The coordinates of the cluster centers</em></p></li>
 <li><p><em>list</em></p></li>
 <li><p><em>A list containing the cluster label for every example (row) in X.</em></p></li>
 </ul>
@@ -125,29 +179,28 @@
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_assignments</span> <span class="o">=</span> <span class="n">fit_predict</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">fit_assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kmeaningful.fit_predict.predict">
-<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_predict.</span></code><code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_predict.html#predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_predict.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assigns data to clusters based on Euclidean distance to the nearest centroid.</p>
+<dt id="kmeaningful.fit_assign.init_centers">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">init_centers</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#init_centers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.init_centers" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function chooses initial cluster locations using Kmeans++</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>DataFrame</em>) – </p></li>
-<li><p><strong>data for cluster assignment.</strong> (<em>Pre-scaled</em>) – </p></li>
-<li><p><strong>centers</strong> (<em>array</em>) – </p></li>
-<li><p><strong>locations of the cluster centers.</strong> (<em>The</em>) – </p></li>
+<li><p><strong>X</strong> (<em>array</em>) – </p></li>
+<li><p><strong>used to find clusters.  Dimensions</strong> (<em>Data</em>) – </p></li>
+<li><p><strong>k</strong> (<em>int</em>) – </p></li>
+<li><p><strong>desired number of clusters .</strong> (<em>The</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>list</em></p></li>
-<li><p><em>A list with the cluster assignments for the data.</em></p></li>
+<li><p><em>array</em></p></li>
+<li><p><em>Array containing the initial coordinates of the k clusters</em></p></li>
 </ul>
 </p>
 </dd>
@@ -155,9 +208,38 @@
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_assignments</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intial_centers</span> <span class="o">=</span> <span class="n">init</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kmeaningful.fit_assign.measure_dist">
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">measure_dist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#measure_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.measure_dist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measures the euclidean distance between each row (point) in <cite>X</cite>,
+and each row (cluster centre) in <cite>centers</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array</em>) – </p></li>
+<li><p><strong>for cluster assignment. Dimensions</strong> (<em>Data</em>) – </p></li>
+<li><p><strong>centers</strong> (<em>array</em>) – </p></li>
+<li><p><strong>locations of the cluster centers. Dimensions</strong> (<em>The</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>array</em></p></li>
+<li><p><strong>The distances from each point to each center. Dimensions</strong> (<em>(n, k)</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -201,14 +283,15 @@
 <span id="kmeaningful-show-clusters-module"></span><h2>kmeaningful.show_clusters module<a class="headerlink" href="#module-kmeaningful.show_clusters" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="kmeaningful.show_clusters.show_clusters">
-<code class="sig-prename descclassname"><span class="pre">kmeaningful.show_clusters.</span></code><code class="sig-name descname"><span class="pre">show_clusters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centroids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/show_clusters.html#show_clusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.show_clusters.show_clusters" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function reduces a data set to 2 dimensions using principle component analysis (PCA) and colours clusters of points.</p>
-<p>X : DataFrame
-Pre-scaled data to train clustering model with.</p>
-<p>centroids: array
+<code class="sig-prename descclassname"><span class="pre">kmeaningful.show_clusters.</span></code><code class="sig-name descname"><span class="pre">show_clusters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centroids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/show_clusters.html#show_clusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.show_clusters.show_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function reduces a data set to 2 dimensions using principle component analysis (PCA) and colours clusters of points.
+Parameters</p>
+<p>data : DataFrame
+Scaled data</p>
+<p>clusters : list, pandas Series
+corresponding cluster for X</p>
+<p>centroids: 2d array
 Coordinates of cluster centroids</p>
-<p>labels: list, optional
-Names of clusters, by default None</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -220,11 +303,8 @@ Names of clusters, by default None</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">processed_data</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">optimal_K</span> <span class="o">=</span> <span class="n">find_elbow</span><span class="p">(</span><span class="n">processed_data</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">centroids</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">optimal_k</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">show_clusters</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">centroids</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show_clusters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">centroids</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
