@@ -20,14 +20,6 @@ kmeaningful.fit\_assign module
    :undoc-members:
    :show-inheritance:
 
-kmeaningful.kmeaningful module
-------------------------------
-
-.. automodule:: kmeaningful.kmeaningful
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 kmeaningful.preprocess module
 -----------------------------
 
