@@ -28,11 +28,8 @@ def show_clusters(data, clusters, centroids = None):
     Examples
     --------
     >>> from sklearn.datasets import make_blobs
-    >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
-    >>> processed_data = preprocess(X)
-    >>> optimal_K = find_elbow(processed_data)
-    >>> centroids = fit(processed_data, optimal_k)
-    >>> show_clusters(processed_data, centroids)
+    >>> X, y = make_blobs(n_samples=10, centers=3, n_features=2)
+    >>> show_clusters(X, y, centroids)
 
     
     """
