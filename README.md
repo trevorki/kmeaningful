@@ -13,7 +13,7 @@ There already exist several packages that implement k-means clustering in Python
 ## Installation
 
 ```bash
-$ pip install -i https://test.pypi.org/simple/kmeaningful
+$ pip3 install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple kmeaningful==0.2.0
 ```
 
 ## Features
