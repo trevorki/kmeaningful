@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kmeaningful.fit_assign &#8212; kmeaningful  documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for kmeaningful.fit_assign</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<div class="viewcode-block" id="init_centers"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.fit_assign.init_centers">[docs]</a><span class="k">def</span> <span class="nf">init_centers</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function chooses initial cluster locations using Kmeans++</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : array</span>
+<span class="sd">    Data used to find clusters.  Dimensions: (n,d)</span>
+
+<span class="sd">    k : int</span>
+<span class="sd">    The desired number of clusters .</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">    Array containing the initial coordinates of the k clusters</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_blobs</span>
+<span class="sd">    &gt;&gt;&gt; X, _ = make_blobs(n_samples=10, centers=3, n_features=2)</span>
+<span class="sd">    &gt;&gt;&gt; intial_centers = init(X, 3)    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Throw error if k &gt; number of data points</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Number of clusters must be less than number of data points&quot;</span><span class="p">)</span>
+     <span class="c1"># Throw error if k is negative</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Number of clusters must be a positive integer&quot;</span><span class="p">)</span>
+    <span class="c1"># Throw error if X is empty</span>
+    <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Input data must have at least one row&quot;</span><span class="p">)</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dimensions</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">))</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="p">[]</span>             <span class="c1">#indeces of existing centers</span>
+
+    <span class="c1"># pick 1st center at random</span>
+    <span class="n">ind</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">centers</span><span class="p">[</span><span class="mi">0</span><span class="p">,]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="c1">#find rest of centers</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="n">dists_sq</span> <span class="o">=</span> <span class="n">measure_dist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">kk</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>     <span class="c1"># measure distance from every point to current center</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ind</span><span class="p">:</span>                                    <span class="c1"># set distance between existing centers to 0</span>
+            <span class="n">dists_sq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">dists_sq</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">dists_sq</span><span class="p">[</span><span class="n">dists_sq</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>                 <span class="c1"># replace 0 with inf so they don&#39;t get selected</span>
+        <span class="n">dists_sq</span> <span class="o">=</span> <span class="n">dists_sq</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>                <span class="c1"># select minimum distance in row</span>
+        <span class="n">dists_sq</span><span class="p">[</span><span class="n">dists_sq</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>                 <span class="c1"># replace inf with 0 again to make probability of selecting existing center zero</span>
+        <span class="n">probs</span> <span class="o">=</span> <span class="p">(</span><span class="n">dists_sq</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dists_sq</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>   <span class="c1"># probability prop to dist_sq</span>
+        <span class="n">ind</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">probs</span><span class="p">)),</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probs</span><span class="p">))</span> <span class="c1">#select point at random</span>
+        <span class="n">centers</span><span class="p">[</span><span class="n">kk</span><span class="p">,]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">ind</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">centers</span></div>
+
+
+<div class="viewcode-block" id="assign"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.fit_assign.assign">[docs]</a><span class="k">def</span> <span class="nf">assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assigns data to clusters based on Euclidean distance to the nearest centroid. </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : array</span>
+<span class="sd">    Data for cluster assignment.  Dimensions: (n,d)</span>
+
+<span class="sd">    centers : array</span>
+<span class="sd">    The locations of the cluster centers.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">    The cluster assignments for the data.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_blobs</span>
+<span class="sd">    &gt;&gt;&gt; X, _ = make_blobs(n_samples=10, centers=3, n_features=2)</span>
+<span class="sd">    &gt;&gt;&gt; centers = fit(X, 3)</span>
+<span class="sd">    &gt;&gt;&gt; cluster_assignments = predict(X, centers)</span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+
+    <span class="c1"># Throw error if X and centers have different widths</span>
+    <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;`X` and `centers` must have the same width&quot;</span><span class="p">)</span>
+    <span class="c1"># Throw error if there are more centers than data points</span>
+    <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;There are more centers than data points&quot;</span><span class="p">)</span>
+
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">measure_dist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">nn</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">labels</span><span class="p">[</span><span class="n">nn</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">nn</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">labels</span></div>
+
+
+<div class="viewcode-block" id="measure_dist"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.fit_assign.measure_dist">[docs]</a><span class="k">def</span> <span class="nf">measure_dist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Measures the euclidean distance between each row (point) in `X`,</span>
+<span class="sd">    and each row (cluster centre) in `centers`</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : array</span>
+<span class="sd">    Data for cluster assignment. Dimensions: (n,d)</span>
+
+<span class="sd">    centers : array</span>
+<span class="sd">    The locations of the cluster centers. Dimensions: (k,d)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">    The distances from each point to each center. Dimensions: (n, k)</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_blobs</span>
+<span class="sd">    &gt;&gt;&gt; X, _ = make_blobs(n_samples=10, centers=3, n_features=2)</span>
+<span class="sd">    &gt;&gt;&gt; centers = fit(X, 3)</span>
+<span class="sd">    &gt;&gt;&gt; distances = predict(X, centers)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Throw error if there are more centers than data points</span>
+    <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;There are more centers than data points&quot;</span><span class="p">)</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>  
+        <span class="k">for</span> <span class="n">nn</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">pt</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">nn</span><span class="p">,]</span>
+            <span class="n">cent</span> <span class="o">=</span> <span class="n">centers</span><span class="p">[</span><span class="n">kk</span><span class="p">,]</span>          
+            <span class="n">distances</span><span class="p">[</span><span class="n">nn</span><span class="p">,</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">pt</span> <span class="o">-</span> <span class="n">cent</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">distances</span></div>
+
+
+<div class="viewcode-block" id="calc_centers"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.fit_assign.calc_centers">[docs]</a><span class="k">def</span> <span class="nf">calc_centers</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the coordinates of the centroid of each cluster</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : array</span>
+<span class="sd">    Data for cluster assignment. Dimensions: (n,d)</span>
+
+<span class="sd">    centers : array</span>
+<span class="sd">    The locations of the cluster centers. Dimensions: (k,d). Used only to determine number of clusters</span>
+<span class="sd">    </span>
+<span class="sd">    labels: array</span>
+<span class="sd">    The assigned cluster for each data point in X. Dimensions: (n,)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">    A (k,d) array of the center locations for each cluster.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#  Throw error if `X` and `labels` have different lengths</span>
+    <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The number of labels is different from the number of points&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Throw error if `X` and `centers` have different widths</span>
+    <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;`X` and `centers` must have the same width&quot;</span><span class="p">)</span>
+
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">new_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">current_center</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">kk</span><span class="p">][:,</span><span class="n">dd</span><span class="p">])</span> <span class="k">for</span> <span class="n">dd</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span> <span class="c1"># mean of points assigned to center kk for each dimension</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">current_center</span><span class="p">))</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>  <span class="c1"># If there are points assigned to current center   </span>
+            <span class="n">new_centers</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_center</span>       <span class="c1"># add current center to new_centers</span>
+        <span class="k">else</span><span class="p">:</span>                                      <span class="c1"># if there is points assigned to nearest center</span>
+            <span class="n">dists</span> <span class="o">=</span> <span class="n">measure_dist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">[</span><span class="n">kk</span><span class="p">])</span>
+            <span class="n">new_centers</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dists</span><span class="p">)</span><span class="o">//</span><span class="n">d</span><span class="p">,]</span>  <span class="c1"># set new center to farthest point from current center</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;centre </span><span class="si">{</span><span class="n">kk</span><span class="si">}</span><span class="s2"> has no nearest points, reassign to </span><span class="si">{</span><span class="n">new_centers</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+    <span class="k">return</span> <span class="n">new_centers</span></div>
+
+
+<div class="viewcode-block" id="fit"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.fit_assign.fit">[docs]</a><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : array</span>
+<span class="sd">    Data to train clustering model with.  Dimensions: (n,d)</span>
+
+<span class="sd">    k : int</span>
+<span class="sd">    The number of clusters to use for Kmeans.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">    A (k,d) array of the center locations for each cluster.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_blobs</span>
+<span class="sd">    &gt;&gt;&gt; X, _ = make_blobs(n_samples=10, centers=3, n_features=2)</span>
+<span class="sd">    &gt;&gt;&gt; centers = fit(X, 3)</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Throw error if X contains missing values</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Array contains non-numeric data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Throw error if X is not array-like</span>
+    <span class="k">try</span><span class="p">:</span> 
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Data must be an array&quot;</span><span class="p">)</span>
+    <span class="c1">#  Throw error if k is not an integer</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;k must be an integer&quot;</span><span class="p">)</span>
+
+    <span class="c1"># initialize cluster centers and assign points to clusters</span>
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">init_centers</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># iteration counter</span>
+    
+    <span class="c1"># first iteration</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span> <span class="c1"># assign cluster label based on closest center</span>
+    <span class="n">new_centers</span> <span class="o">=</span> <span class="n">calc_centers</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">new_labels</span> <span class="o">=</span> <span class="n">assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span>
+
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>               <span class="c1">#initialize iteration counter</span>
+
+    <span class="c1">#subsequent iterations</span>
+    <span class="k">while</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">new_centers</span> <span class="o">-</span> <span class="n">centers</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">)):</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="n">new_centers</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">new_labels</span>
+        <span class="n">new_labels</span> <span class="o">=</span> <span class="n">assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span> <span class="c1"># assign cluster label based on closest center</span>
+        <span class="n">new_centers</span> <span class="o">=</span> <span class="n">calc_centers</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">new_labels</span><span class="p">)</span>
+
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">new_centers</span></div>
+    
+
+<div class="viewcode-block" id="fit_assign"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.fit_assign.fit_assign">[docs]</a><span class="k">def</span> <span class="nf">fit_assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function takes in data and performs clustering using the KMeans clustering algorithm.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : array</span>
+<span class="sd">    Pre-scaled data to train clustering model with. Dimensions: (n,d)</span>
+
+<span class="sd">    k : int</span>
+<span class="sd">    The number of clusters to use for Kmeans.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array</span>
+<span class="sd">    The coordinates of the cluster centers</span>
+<span class="sd">    </span>
+<span class="sd">    list</span>
+<span class="sd">    A list containing the cluster label for every example (row) in X.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_blobs</span>
+<span class="sd">    &gt;&gt;&gt; X, _ = make_blobs(n_samples=10, centers=3, n_features=2)</span>
+<span class="sd">    &gt;&gt;&gt; centers, labels = fit_assign(X, 3)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Throw error if X contains missing values</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Array contains non-numeric data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Throw error if X is not array-like</span>
+    <span class="k">try</span><span class="p">:</span> 
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Input format not accepted&quot;</span><span class="p">)</span>
+    <span class="c1">#  Throw error if k is not an integer</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;k must be an integer&quot;</span><span class="p">)</span>
+
+
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">assign</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span>
+       
+    <span class="k">return</span> <span class="n">centers</span><span class="p">,</span> <span class="n">labels</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">kmeaningful</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conduct.html">Code of Conduct</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Group 16.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
