@@ -35,15 +35,29 @@ $ pip3 install --index-url https://test.pypi.org/simple/ --extra-index-url https
 
 ## Usage
 
-`import kmeaningful as km`
+`from kmeaningful import preprocess, fit_assign, find_elbow, show_clusters`
 
 | Task | Function  |
 |------------|-----|
-| Scale numeric features and use OHE on categorical features| `km.preprocess(df)`|
-| Find list of centroid points| `km.fit(df, 3)`|
-| Assign new data point to cluster| `km.assign(df, array2d)`|
-| Find optimal number of cluster| `km.fit_elbow(df)`|
-| Visualize data coloured by cluster| `km.show_cluster(df, array2d)`|
+| Scale numeric features and use OHE on categorical features| `preprocess.preprocess(df)`|
+| Find optimal number of cluster| `find_elbow.find_elbow(df)`|
+| Find list of centroid points| `fit_assign.fit(df, 3)`|
+| Assign new data point to cluster| `fit_assign.assign(df, array2d)`|
+| Visualize data coloured by cluster| `show_clusters.show_cluster(df, array2d)`|
+
+## Example
+
+``` py
+
+from kmeaningful import preprocess, fit_assign, find_elbow, show_clusters
+
+example_df = [[1,2,1],[1,3,3],[2,3,4]]
+processed_data = preprocess.preprocess(example_df)
+optimal_K = find_elbow.find_elbow(processed_data)
+arr, clust = fit_assign.fit_assign(processed_data, optimal_K)
+show_clusters.show_clusters(processed_data, clust)
+
+```
 
 ## Documentation
 
