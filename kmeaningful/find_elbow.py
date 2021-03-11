@@ -5,9 +5,12 @@ import numpy as np
 
 def find_elbow(X):
     """
-    This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to the min(10, n_samples - 1).
-    
-    It returns the value for K which maximizes the mean silhouette scores for all clusters.
+    This function takes in unlabeled, scaled data and performs clustering
+    using the KMeans clustering algorithm values of K up to the
+    min(10, n_samples - 1).
+
+    It returns the value for K which maximizes the mean silhouette scores for
+    all clusters.
 
     Parameters
     ----------
@@ -17,7 +20,8 @@ def find_elbow(X):
     Returns
     -------
     optimal_K: int
-    The value for K which maximizes the mean silhouette scores across all clusters.
+    The value for K which maximizes the mean silhouette scores across all
+    clusters.
 
     Examples
     --------
@@ -25,17 +29,22 @@ def find_elbow(X):
     >>> X, _ = make_blobs(n_samples=10, centers=3, n_features=2)
     >>> processed_data = preprocess(X)
     >>> optimal_K = find_elbow(processed_data)
-    
+
     """
     # Raise exception for bad input
     if not type(X) == np.ndarray:
         raise Exception(
-            f"Please provide a numpy ndarray as input. Input type detected: {type(X)}"
+            f"Please provide a numpy ndarray as input. Input type detected:\
+                 {type(X)}"
         )
 
-    # This check is needed because silhouette score is only defined for 1 < n_labels < n_samples
+    # This check is needed because silhouette score is only defined for
+    # 1 < n_labels < n_samples
     if len(X) < 3:
-        raise Exception("Please provide a numpy ndarray with at least three rows")
+        raise Exception(
+            "Please provide a numpy ndarray with at least three\
+             rows"
+        )
 
     # Calculate the max possible value for K given the input data
     max_clusters = min(10, X.shape[0] - 1)

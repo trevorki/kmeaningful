@@ -9,7 +9,8 @@ def test_find_elbow():
     """Test cases for the find_elbow function"""
 
     # Fix random seed to prevent randomness in test cases
-    # This is needed because there is randomness in the way k-means is initialized
+    # This is needed because there is randomness in the way k-means is
+    # initialized
     np.random.seed(1234)
 
     # non numpy.ndarray input should raise exception
@@ -35,5 +36,9 @@ def test_find_elbow():
         optimal_K, int
     ), f"The type for optimal_K is {type(optimal_K)} but should be int"
 
-    # Make sure the find_elbow function returns the correct number of clusters for the helper data (3)
-    assert optimal_K == 3, f"The optimal K should have been 3 but was {optimal_K}"
+    # Make sure the find_elbow function returns the correct number of clusters
+    # for the helper data (3)
+    assert (
+        optimal_K == 3
+    ), f"The optimal K should have been 3 but was\
+         {optimal_K}"
