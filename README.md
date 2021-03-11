@@ -34,6 +34,7 @@ $ pip3 install --index-url https://test.pypi.org/simple/ --extra-index-url https
     - altair==^4.1.0
     - flake8==^3.8.4 
     - codecov==^2.1.11
+    - python-semantic-release==^7.15.0
 
 ## Usage
 
