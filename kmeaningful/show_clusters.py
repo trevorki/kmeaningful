@@ -19,7 +19,6 @@ def show_clusters(data, clusters, centroids=None):
 
     centroids: 2d array
     Coordinates of cluster centroids
-cd
 
     Returns
     -------
