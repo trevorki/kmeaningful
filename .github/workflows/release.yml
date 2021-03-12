@@ -13,8 +13,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  # This workflow contains a single job called "publish"
+  publish:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -37,11 +37,16 @@ jobs:
       uses: actions/checkout@master
       with:
         ref: master
-    - name: Bump version and tagging and publish
+        fetch-depth: '0'
+    - name: Temporarily disable "include administrators" branch protection
+      uses: benjefferies/branch-protection-bot@master
+      if: always()
+      with:
+          access-token: ${{ secrets.ACCESS_TOKEN }}
+    - name: Bump package versions
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git pull origin master
         poetry run semantic-release version
         poetry version $(grep "version" */__init__.py | cut -d "'" -f 2 | cut -d '"' -f 2)
         git commit -m "Bump versions" -a
@@ -49,6 +54,13 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Enable "include administrators" branch protection
+      uses: benjefferies/branch-protection-bot@master
+      if: always()  # Force to always run this step to ensure "include administrators" is always turned back on
+      with:
+        access-token: ${{ secrets.ACCESS_TOKEN }}
+        owner: <github_username_or_org>
+        repo: <github_repo_name>
     - name: Get release tag version from package version
       run: |
         echo ::set-output name=release_tag::$(grep "version" */__init__.py | cut -d "'" -f 2 | cut -d '"' -f 2)
