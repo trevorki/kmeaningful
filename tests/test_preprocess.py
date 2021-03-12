@@ -1,4 +1,3 @@
-from kmeaningful import __version__
 from kmeaningful.preprocess import preprocess
 
 from sklearn.datasets import make_blobs
@@ -7,10 +6,6 @@ import pandas as pd
 import numpy as np
 
 import pytest
-
-
-def test_version():
-    assert __version__ == '0.1.0'
 
 
 def test_preprocess():
