@@ -1,12 +1,7 @@
-from kmeaningful import __version__
 from kmeaningful.fit_assign import init_centers, assign, measure_dist, \
     calc_centers, fit, fit_assign
 import numpy as np
 import pytest
-
-
-def test_version():
-    assert __version__ == '0.1.0'
 
 
 def test_init_centers():
