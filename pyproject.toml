@@ -4,6 +4,10 @@ version = "0.1.0"
 description = "Package for automating k-means clustering workflows"
 authors = ["Your Name <you@example.com>"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/UBC-MDS/kmeaningful"
+repository = "https://github.com/UBC-MDS/kmeaningful"
+documentation = 'https://kmeaningful.readthedocs.io'
 
 [tool.poetry.dependencies]
 python = "^3.8"
