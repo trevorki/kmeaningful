@@ -40,8 +40,11 @@
 <dl class="py function">
 <dt id="kmeaningful.find_elbow.find_elbow">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.find_elbow.</span></code><code class="sig-name descname"><span class="pre">find_elbow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/find_elbow.html#find_elbow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.find_elbow.find_elbow" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm values of K up to the min(10, n_samples - 1).</p>
-<p>It returns the value for K which maximizes the mean silhouette scores for all clusters.</p>
+<dd><p>This function takes in unlabeled, scaled data and performs clustering
+using the KMeans clustering algorithm values of K up to the
+min(10, n_samples - 1).</p>
+<p>It returns the value for K which maximizes the mean silhouette scores for
+all clusters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -52,7 +55,8 @@
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>optimal_K</strong> (<em>int</em>)</p></li>
-<li><p><em>The value for K which maximizes the mean silhouette scores across all clusters.</em></p></li>
+<li><p><em>The value for K which maximizes the mean silhouette scores across all</em></p></li>
+<li><p><em>clusters.</em></p></li>
 </ul>
 </p>
 </dd>
@@ -72,7 +76,8 @@
 <dl class="py function">
 <dt id="kmeaningful.fit_assign.assign">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">assign</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.assign" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assigns data to clusters based on Euclidean distance to the nearest centroid.</p>
+<dd><p>Assigns data to clusters based on Euclidean distance to the
+nearest centroid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -110,6 +115,7 @@
 <li><p><strong>for cluster assignment. Dimensions</strong> (<em>Data</em>) – </p></li>
 <li><p><strong>centers</strong> (<em>array</em>) – </p></li>
 <li><p><strong>locations of the cluster centers. Dimensions</strong> (<em>The</em>) – </p></li>
+<li><p><strong>only to determine number of clusters</strong> (<em>Used</em>) – </p></li>
 <li><p><strong>labels</strong> (<em>array</em>) – </p></li>
 <li><p><strong>assigned cluster for each data point in X. Dimensions</strong> (<em>The</em>) – </p></li>
 </ul>
@@ -127,7 +133,8 @@
 <dl class="py function">
 <dt id="kmeaningful.fit_assign.fit">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in unlabeled, scaled data and performs clustering using the KMeans clustering algorithm.</p>
+<dd><p>This function takes in unlabeled, scaled data and performs
+clustering using the KMeans clustering algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -156,7 +163,8 @@
 <dl class="py function">
 <dt id="kmeaningful.fit_assign.fit_assign">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.fit_assign.</span></code><code class="sig-name descname"><span class="pre">fit_assign</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/fit_assign.html#fit_assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.fit_assign.fit_assign" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in data and performs clustering using the KMeans clustering algorithm.</p>
+<dd><p>This function takes in data and performs clustering using the
+KMeans clustering algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -250,19 +258,22 @@ and each row (cluster centre) in <cite>centers</cite></p>
 <dl class="py function">
 <dt id="kmeaningful.preprocess.preprocess">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.preprocess.</span></code><code class="sig-name descname"><span class="pre">preprocess</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/preprocess.html#preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.preprocess.preprocess" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function takes in training data and applies some preprocessing steps such as scaling and one hot encoding.</p>
+<dd><p>This function takes in training data and applies
+preprocessing steps such as scaling and one hot encoding.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X</strong> (<em>Array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – </p></li>
 <li><p><strong>data on which to apply preprocessing steps</strong> (<em>Unprocessed</em>) – </p></li>
-<li><p><strong>be in form of DataFrame</strong><strong> or </strong><strong>Array</strong> (<em>can</em>) – </p></li>
+<li><p><strong>be</strong> (<em>can</em>) – </p></li>
+<li><p><strong>form of DataFrame</strong><strong> or </strong><strong>Array.</strong> (<em>in</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><em>Numpy ndarray of shape (n_samples, n_features_new)</em></p></li>
-<li><p><em>An array representing the data after appropriate preprocessing steps are applied.</em></p></li>
+<li><p><em>An array representing the data after appropriate preprocessing</em></p></li>
+<li><p><em>steps are applied.</em></p></li>
 </ul>
 </p>
 </dd>
@@ -281,7 +292,8 @@ and each row (cluster centre) in <cite>centers</cite></p>
 <dl class="py function">
 <dt id="kmeaningful.show_clusters.show_clusters">
 <code class="sig-prename descclassname"><span class="pre">kmeaningful.show_clusters.</span></code><code class="sig-name descname"><span class="pre">show_clusters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centroids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kmeaningful/show_clusters.html#show_clusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kmeaningful.show_clusters.show_clusters" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function reduces a data set to 2 dimensions using principle component analysis (PCA) and colours clusters of points.
+<dd><p>This function reduces a data set to 2 dimensions using
+principle component analysis (PCA) and colours clusters of points.
 Parameters</p>
 <p>data : DataFrame
 Scaled data</p>

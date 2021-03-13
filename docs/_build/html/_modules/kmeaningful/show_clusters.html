@@ -31,35 +31,89 @@
           <div class="body" role="main">
             
   <h1>Source code for kmeaningful.show_clusters</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="show_clusters"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.show_clusters.show_clusters">[docs]</a><span></span><span class="k">def</span> <span class="nf">show_clusters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centroids</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
+
+
+<div class="viewcode-block" id="show_clusters"><a class="viewcode-back" href="../../source/kmeaningful.html#kmeaningful.show_clusters.show_clusters">[docs]</a><span class="k">def</span> <span class="nf">show_clusters</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">clusters</span><span class="p">,</span> <span class="n">centroids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function reduces a data set to 2 dimensions using principle component analysis (PCA) and colours clusters of points.</span>
-<span class="sd">    </span>
+<span class="sd">    This function reduces a data set to 2 dimensions using</span>
+<span class="sd">    principle component analysis (PCA) and colours clusters of points.</span>
+<span class="sd">    Parameters</span>
+
+
 <span class="sd">    ----------</span>
-<span class="sd">    X : DataFrame</span>
-<span class="sd">    Pre-scaled data to train clustering model with.</span>
+<span class="sd">    data : DataFrame</span>
+<span class="sd">    Scaled data</span>
 
-<span class="sd">    centroids: array</span>
+<span class="sd">    clusters : list, pandas Series</span>
+<span class="sd">    corresponding cluster for X</span>
+
+<span class="sd">    centroids: 2d array</span>
 <span class="sd">    Coordinates of cluster centroids</span>
-
-<span class="sd">    labels: list, optional</span>
-<span class="sd">    Names of clusters, by default None</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    plot</span>
 <span class="sd">    A 2d principle components scatter plot coloured by cluster</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; from sklearn.datasets import make_blobs</span>
-<span class="sd">    &gt;&gt;&gt; X, _ = make_blobs(n_samples=10, centers=3, n_features=2)</span>
-<span class="sd">    &gt;&gt;&gt; processed_data = preprocess(X)</span>
-<span class="sd">    &gt;&gt;&gt; optimal_K = find_elbow(processed_data)</span>
-<span class="sd">    &gt;&gt;&gt; centroids = fit(processed_data, optimal_k)</span>
-<span class="sd">    &gt;&gt;&gt; show_clusters(processed_data, centroids)</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    &gt;&gt;&gt; X, y = make_blobs(n_samples=10, centers=3, n_features=2)</span>
+<span class="sd">    &gt;&gt;&gt; show_clusters(X, y, centroids)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Exception handling</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;data should be a pandas dataframe or a numpy2darray.&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">clusters</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;clusters should be a list of numbers,&quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;a pandas series or a numpy1darray.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">clusters</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;data should have the same number of rows as clusters&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Plot without centroid</span>
+    <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">principal_comp</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">pca_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">principal_comp</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pca1&quot;</span><span class="p">,</span> <span class="s2">&quot;pca2&quot;</span><span class="p">])</span>
+    <span class="n">pca_df</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">pca_df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;pca1&#39;</span><span class="p">),</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;pca2&#39;</span><span class="p">),</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cluster&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Exception handling for plot with centroid</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">centroids</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">centroids</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">centroids</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;centroids should be a pandas dataframe or a numpy2darray.&quot;</span><span class="p">)</span>
+        <span class="n">centroids_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">centroids</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+                <span class="s2">&quot;pca1&quot;</span><span class="p">,</span> <span class="s2">&quot;pca2&quot;</span><span class="p">])</span>
+        <span class="c1"># centroids_df = pd.DataFrame(data= np.array(centroids),</span>
+        <span class="c1">#  columns=[&quot;pca1&quot;, &quot;pca2&quot;])</span>
+        <span class="n">centroids_df</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+            <span class="nb">range</span><span class="p">(</span><span class="n">centroids</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+        <span class="n">plot_centroid</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">centroids_df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span>
+            <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;cross&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+            <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;pca1&#39;</span><span class="p">),</span> <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;pca2&#39;</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cluster&#39;</span><span class="p">)</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">plot</span> <span class="o">+</span> <span class="n">plot_centroid</span>
+
+    <span class="k">return</span> <span class="n">plot</span></div>
 </pre></div>
 
           </div>

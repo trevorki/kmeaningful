@@ -12,7 +12,7 @@ To install kmeaningful, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install -u kmeaningful
+    $ pip3 install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple kmeaningful==0.2.0
 
 This is the preferred method to install kmeaningful, as it will always install the most recent stable release.
 
