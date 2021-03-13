@@ -38,7 +38,7 @@ Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/UBC-MDS/kmeaningful/tarball/main
+    $ curl  -OL https://github.com/UBC-MDS/kmeaningful/tarball/master
 
 Once you have a copy of the source, you can install it. The method of installation will depend on the packaging library being used.
 
