@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kmeaningful"
-version = "0.2.4"
+version = "0.2.5"
 description = "Package for automating k-means clustering workflows"
 authors = ["Your Name <you@example.com>"]
 license = "MIT"
