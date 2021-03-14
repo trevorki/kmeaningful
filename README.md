@@ -57,8 +57,8 @@ from kmeaningful import preprocess, fit_assign, find_elbow, show_clusters
 example_df = [[1,2,1],[1,3,3],[2,3,4]]
 processed_data = preprocess.preprocess(example_df)
 optimal_K = find_elbow.find_elbow(processed_data)
-arr, clust = fit_assign.fit_assign(processed_data, optimal_K)
-show_clusters.show_clusters(processed_data, clust)
+centers, labels = fit_assign.fit_assign(processed_data, optimal_K)
+show_clusters.show_clusters(processed_data, labels, centers)
 
 ```
 
