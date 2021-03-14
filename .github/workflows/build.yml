@@ -34,5 +34,13 @@ jobs:
           poetry install
       - name: Run style checkers
         run: poetry run flake8 --exclude=docs*
-      - name: Run test suite with pytest
-        run: poetry run pytest
+      - name: Test with pytest
+        run: poetry run pytest --cov=./ --cov-report=xml
+      - name: Upload coverage to Codecov  
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
